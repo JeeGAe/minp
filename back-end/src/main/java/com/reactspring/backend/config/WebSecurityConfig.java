@@ -44,14 +44,15 @@ public class WebSecurityConfig {
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
       )
       .authorizeHttpRequests(request -> request
-        .requestMatchers("/").permitAll()
+        .requestMatchers("/", "/api/auth/**").permitAll()
         .anyRequest().authenticated()
       )
       .exceptionHandling(exceptionHandling -> exceptionHandling
         .authenticationEntryPoint(new FailedAuthenticationEntryPoint())
-      );
+      )
+      .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-      httpSecurity.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
 
     return httpSecurity.build();
 
