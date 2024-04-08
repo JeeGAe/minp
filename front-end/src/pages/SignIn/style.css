@@ -1,0 +1,22 @@
+#sign-in-wrapper{
+  background-color: rgba(238, 238, 238, 1);
+  padding: 100px 0px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign-in-container{
+  display: grid;
+  grid-template-columns: 6fr 6fr;
+  column-gap: 30px;
+}
+
+.sign-in-context-box{
+  width: 500px;
+}
+
+.sign-in-context-text{
+  font-size: 80px;
+}

@@ -1,0 +1,22 @@
+#sign-up-wrapper{
+  background-color: rgba(238, 238, 238, 1);
+  padding: 100px 0px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign-up-container{
+  display: grid;
+  grid-template-columns: 6fr 6fr;
+  column-gap: 30px;
+}
+
+.sign-up-context-box{
+  width: 500px;
+}
+
+.sign-up-context-text{
+  font-size: 80px;
+}

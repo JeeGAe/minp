@@ -1,0 +1,32 @@
+.input-box-label{
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.input-box-container{
+  display: flex;
+
+  padding: 10px 20px 9px 0px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.input-box-container.error{
+  border-bottom: 2px solid rgba(255, 0, 0, 1);
+}
+
+.input{
+  all: unset;
+
+  flex: 1;
+
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.input-box-error-message{
+  font-size: 12px;
+  font-weight: 400;
+  color:rgba(255, 0, 0, 1);
+
+  padding: 5px 0px;
+}
