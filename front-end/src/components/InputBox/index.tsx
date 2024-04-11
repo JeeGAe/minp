@@ -8,8 +8,8 @@ interface Props {
   value : string,
   setValue : Dispatch<SetStateAction<string>>,
 
-  error : boolean,
-  message : string,
+  error? : boolean,
+  message? : string,
 
   readOnly? : boolean
   onClick? : () => void
@@ -34,7 +34,9 @@ const InputBox = forwardRef<HTMLInputElement, Props>((props:Props, ref) => {
       <div className={`input-box-container ${error && 'error'}`}>
         <input className='input' type={type} placeholder={placeholder} value={value} onChange={onChangeHandler} readOnly={readOnly ? true : false} onClick={onClick} />
       </div>
+      {error && message &&
       <div className='input-box-error-message'>{message}</div>
+      }
     </div>
   )
 })

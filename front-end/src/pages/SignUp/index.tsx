@@ -6,6 +6,7 @@ import InputBox from '../../components/InputBox';
 
 // 다움 주소 찾기 api
 import { Address, useDaumPostcodePopup } from 'react-daum-postcode';
+import Button from '../../components/Button';
 
 export default function SignUp() {
 
@@ -27,11 +28,25 @@ export default function SignUp() {
   const [isPhoneNumberError, setPhoneNumberError] = useState(false);
 
   // 유저 가입 정보 에러 메세지 상태
-  const [emailErrorMessage, setEmailErrorMessage] = useState('');
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
-  const [passwordCheckErrorMessage, setPasswordCheckErrorMessage] = useState('');
-  const [nicknameErrorMessage, setNicknameErrorMessage] = useState('');
-  const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] = useState('');
+  // const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  // const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  // const [passwordCheckErrorMessage, setPasswordCheckErrorMessage] = useState('');
+  // const [nicknameErrorMessage, setNicknameErrorMessage] = useState('');
+  // const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  // 에러 상태 초기화 함수
+  const errorInitialize = () => {
+    setEmailError(false);
+    setPasswordError(false);
+    setPasswordCheckError(false);
+    setNicknameError(false);
+    setPhoneNumberError(false);
+
+    setErrorMessage('');
+
+    return ;
+  }
 
   // 다음 주소 찾기 api
   const openUseDaumPostcodePopup = useDaumPostcodePopup();
@@ -44,6 +59,31 @@ export default function SignUp() {
     const { address, zonecode } = data;
     setZipCode(zonecode);
     setAddress(address);
+  }
+
+  const onClickSignUpButtonHandler = () => {
+    errorInitialize();
+    if(email.trim() === '') {
+      setEmailError(true);
+      setErrorMessage('이메일을 형식에 맞게 적어주십시오!');
+      return ;
+    }
+    if(password.trim() === '') {
+      setPasswordError(true);
+      setErrorMessage('비밀번호를 형식에 맞게 적어주십시오!');
+      return ;
+    }
+    if(password.trim() !== passwordCheck.trim()) {
+      setPasswordCheckError(true);
+      setErrorMessage('비밀번호가 일치하지 않습니다.');
+      return ;
+    }
+    if(nickname.trim() === '') {
+      setNicknameError(true);
+      setErrorMessage('닉네임을 형식에 맞게 적어주십시오!');
+      return ;
+    }
+
   }
 
   // 렌더링 
@@ -63,7 +103,7 @@ export default function SignUp() {
             value={email} 
             setValue={setEmail} 
             error={isEmailError} 
-            message={emailErrorMessage} 
+            message={errorMessage} 
           />
           <InputBox 
             label='비밀번호*' 
@@ -72,7 +112,7 @@ export default function SignUp() {
             value={password} 
             setValue={setPassword} 
             error={isPasswordError} 
-            message={passwordErrorMessage} 
+            message={errorMessage} 
           />
           <InputBox 
             label='비밀번호 확인*' 
@@ -81,7 +121,7 @@ export default function SignUp() {
             value={passwordCheck} 
             setValue={setPasswordCheck} 
             error={isPasswordCheckError} 
-            message={passwordCheckErrorMessage} 
+            message={errorMessage} 
           />
           <InputBox 
             label='닉네임*' 
@@ -90,7 +130,7 @@ export default function SignUp() {
             value={nickname} 
             setValue={setNickname} 
             error={isNicknameError} 
-            message={nicknameErrorMessage} 
+            message={errorMessage} 
           />
           <InputBox 
             label='연락처' 
@@ -98,7 +138,7 @@ export default function SignUp() {
             type='text' value={phoneNumber} 
             setValue={setPhoneNumber} 
             error={isPhoneNumberError} 
-            message={phoneNumberErrorMessage} 
+            message={errorMessage} 
           />
           <InputBox 
             label='우편번호' 
@@ -106,8 +146,6 @@ export default function SignUp() {
             type='text' 
             value={zipCode} 
             setValue={setZipCode} 
-            error={isPhoneNumberError} 
-            message={phoneNumberErrorMessage} 
             readOnly={true} 
             onClick={onClickAddressInputHandler} 
           />
@@ -117,8 +155,6 @@ export default function SignUp() {
             type='text' 
             value={address} 
             setValue={setAddress} 
-            error={isPhoneNumberError} 
-            message={phoneNumberErrorMessage} 
             readOnly={true} 
             onClick={onClickAddressInputHandler} 
           />
@@ -128,9 +164,10 @@ export default function SignUp() {
             type='text' 
             value={addressDetail} 
             setValue={setAddressDetail} 
-            error={isPhoneNumberError} 
-            message={phoneNumberErrorMessage} 
           />
+          <div className='sign-up-button-box'>
+            <Button text='회원가입' size='wide' onClick={onClickSignUpButtonHandler}/>
+          </div>
         </div>
       </div>
     </div>
