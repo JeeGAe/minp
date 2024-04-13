@@ -7,6 +7,10 @@ import InputBox from '../../components/InputBox';
 // 다움 주소 찾기 api
 import { Address, useDaumPostcodePopup } from 'react-daum-postcode';
 import Button from '../../components/Button';
+import { SignUpRequestDto } from '../../apis/request/auth';
+import { signUpRequest } from '../../apis/auth';
+import { SignUpResponseDto } from '../../apis/response/auth';
+import { ResponseDto } from '../../apis/response';
 
 export default function SignUp() {
 
@@ -61,8 +65,14 @@ export default function SignUp() {
     setAddress(address);
   }
 
+  const signUpResponseHandler = (responseBody : SignUpResponseDto | ResponseDto | null) => {
+    console.log(responseBody);
+  }
+
   const onClickSignUpButtonHandler = () => {
+    // 에러 관련 초기화
     errorInitialize();
+
     if(email.trim() === '') {
       setEmailError(true);
       setErrorMessage('이메일을 형식에 맞게 적어주십시오!');
@@ -83,6 +93,12 @@ export default function SignUp() {
       setErrorMessage('닉네임을 형식에 맞게 적어주십시오!');
       return ;
     }
+
+    const requestBody : SignUpRequestDto = { email, password, nickname,
+       phoneNumber, zipCode, address, addressDetail };
+    
+    signUpRequest(requestBody)
+    .then(signUpResponseHandler)
 
   }
 
