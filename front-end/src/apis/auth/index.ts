@@ -12,13 +12,23 @@ export const signUpRequest = async (requestBody : SignUpRequestDto) => {
       },
       body : JSON.stringify(requestBody),
     })
-    .then(response => response.json())
+    .then(async (response) => {
+      if(!response.ok) {
+        throw await response.json();
+      }
+
+      return response.json();
+    })
     .then(response => {
-      const responseBody : SignUpResponseDto = response.data;
+      const responseBody : SignUpResponseDto = response;
+      if(!requestBody) return null;
       return responseBody;
+      
     })
     .catch(error => {
-      const responseBody : ResponseDto = error.data;
+      const responseBody : ResponseDto = error;
+      console.log(error);
+      if(!requestBody) return null;
       return responseBody;
     })
   

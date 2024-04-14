@@ -66,7 +66,36 @@ export default function SignUp() {
   }
 
   const signUpResponseHandler = (responseBody : SignUpResponseDto | ResponseDto | null) => {
-    console.log(responseBody);
+    if(!responseBody) {
+      alert("죄송합니다. 다시 시도해주십시오.");
+      return ;
+    }
+
+    const { code } = responseBody;
+    if(code === 'DE') {
+      setEmailError(true);
+      setErrorMessage('이미 사용중인 이메일 입니다.');
+      return ;
+    }
+    if(code === 'DN') {
+      setNicknameError(true);
+      setErrorMessage('이미 사용중인 닉네임 입니다.');
+      return ;
+    }
+    if(code === 'DP') {
+      setPhoneNumberError(true);
+      setErrorMessage('이미 사용중인 번호입니다.');
+      return ;
+    }
+    if(code === 'VF') {
+      alert('입력 정보를 확인해주세요!');
+      return ;
+    }
+    if(code === 'IE') {
+      alert('서버에 문제가 있습니다.');
+      return ;
+    }
+
   }
 
   const onClickSignUpButtonHandler = () => {
