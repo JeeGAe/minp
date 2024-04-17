@@ -54,14 +54,14 @@ public class JwtProvider {
 
   }
 
-  public String createJwt(String email, String userName, String role) {
+  public String createJwt(String email, String nickname) {
 
     Date expiredDate = Date.from(Instant.now().plus(1, ChronoUnit.HOURS));
 
     return Jwts.builder()
       .subject(email)
-      .claim("userName", userName)
-      .claim("role", role)
+      .claim("nickname", nickname)
+      //.claim("role", role)
       .issuedAt(new Date(System.currentTimeMillis()))
       .expiration(expiredDate)
       .signWith(secretKey)
