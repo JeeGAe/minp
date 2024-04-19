@@ -3,6 +3,11 @@ import './style.css';
 
 // 컴포넌트
 import InputBox from '../../components/InputBox';
+import Button from '../../components/Button';
+import { SignInRequestDto } from '../../apis/request/auth';
+import { signInRequest } from '../../apis/auth';
+import { SignInResponseDto } from '../../apis/response/auth';
+import { ResponseDto } from '../../apis/response';
 
 export default function SignIn() {
 
@@ -15,8 +20,60 @@ export default function SignIn() {
   const [isPasswordError, setPasswordError] = useState(false);
 
   // 유저 가입 정보 에레 메세지 상태
-  const [emailErrorMessage, setEmailErrorMessage] = useState('');
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  // const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  // const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  // 에러 상태 초기화 함수
+  const errorInitialize = () => {
+    setEmailError(false);
+    setPasswordError(false);
+
+    setErrorMessage('');
+
+    return ;
+  }
+
+  const signInResponseHandler = (responseBody : SignInResponseDto | ResponseDto | null ) => {
+    if(!responseBody) {
+      alert("죄송합니다. 다시 시도해주세요!");
+      return ;
+    }
+
+    const { code } = responseBody;
+    if(code === 'VF' || code === 'SF') {
+      setPasswordError(true);
+      setErrorMessage('계정을 다시 확인해 주세요!');
+      return ;
+    }
+    if(code === 'IE') {
+      alert("서버 에러입니다. 다시 시도해주세요!");
+      return ;
+    }
+    if(code === 'SU') return ;
+    
+  }
+
+  const onClickSignInButtonHandler = () => {
+    errorInitialize();
+
+    if(email.trim() === '') {
+      setEmailError(true);
+      setErrorMessage('이메일을 입력해주세요!');
+      return ;
+    }
+    if(password.trim() === '') {
+      setPasswordError(true);
+      setErrorMessage('비밀번호를 입력해주세요!');
+      return ;
+    }
+
+    const requestBody : SignInRequestDto = { email, password };
+
+    signInRequest(requestBody)
+    .then(signInResponseHandler)
+
+  }
 
 
   // 렌더링 
@@ -34,7 +91,7 @@ export default function SignIn() {
             value={email} 
             setValue={setEmail} 
             error={isEmailError} 
-            message={emailErrorMessage} 
+            message={errorMessage} 
           />
           <InputBox 
             label='비밀번호' 
@@ -43,8 +100,9 @@ export default function SignIn() {
             value={password} 
             setValue={setPassword} 
             error={isPasswordError} 
-            message={passwordErrorMessage} 
+            message={errorMessage} 
           />
+          <Button text='로그인' size='wide' onClick={onClickSignInButtonHandler}/>
         </div>
       </div>
     </div>
