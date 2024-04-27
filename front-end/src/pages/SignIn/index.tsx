@@ -11,23 +11,28 @@ import { ResponseDto } from '../../apis/response';
 import { useAppDispatch } from '../../hooks/store.hook';
 import { signIn } from '../../store/user-slice.store';
 import { UserInfo } from '../../types/interface';
+import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 export default function SignIn() {
 
-  // 유저 가입 정보 상태
+  // 유저 로그인 정보 상태
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  // 유저 가입 정보 에러 상태
+  // 유저 로그인 정보 에러 상태
   const [isEmailError, setEmailError] = useState(false);
   const [isPasswordError, setPasswordError] = useState(false);
 
-  // 유저 가입 정보 에레 메세지 상태
+  // 유저 로그인 에러 메세지 상태
   // const [emailErrorMessage, setEmailErrorMessage] = useState('');
   // const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const dispatch = useAppDispatch();
+  // 쿠키 상태
+  const [cookies, setCookies] = useCookies();
+
+  const navigate = useNavigate();
 
   // 에러 상태 초기화 함수
   const errorInitialize = () => {
@@ -55,13 +60,11 @@ export default function SignIn() {
       alert("서버 에러입니다. 다시 시도해주세요!");
       return ;
     }
-    if(code === 'SU') {
-      const testUser : UserInfo = {
-        isLogin : true,
-        email : 'test@email.com',
-        nickname : '테스트 닉네임'
-      }
-      dispatch(signIn(testUser));
+    if(code === 'SU' && 'token' in responseBody) {
+      const { token } = responseBody;
+      setCookies('accessToken', token);
+
+      navigate('/');
       return ;
     }
     

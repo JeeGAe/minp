@@ -63,6 +63,7 @@ public class AuthServiceImplement implements AuthService {
   public ResponseEntity<? super SignInResponseDto> signIn(SignInRequestDto dto) {
     
     String token = null;
+    String nickname = null;
 
     try {
 
@@ -76,7 +77,7 @@ public class AuthServiceImplement implements AuthService {
       boolean isMatched = passwordEncoder.matches(password, encodedPassword);
       if(!isMatched) return SignInResponseDto.signInFail();
 
-      String nickname = userEntity.getNickname();
+      nickname = userEntity.getNickname();
 
       token = jwtProvider.createJwt(email, nickname);
       

@@ -57,7 +57,7 @@ export const signInRequest = async (requestBody : SignInRequestDto) => {
   })
   .catch(error => {
     const responseBody : ResponseDto = error;
-    if(!requestBody) return null;
+    if(!responseBody) return null;
     return responseBody;
   })
 
