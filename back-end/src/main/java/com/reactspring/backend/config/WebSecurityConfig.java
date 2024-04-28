@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
@@ -45,6 +46,7 @@ public class WebSecurityConfig {
       )
       .authorizeHttpRequests(request -> request
         .requestMatchers("/", "/api/auth/**").permitAll()
+        .requestMatchers(HttpMethod.GET,"/file/**").permitAll()
         .anyRequest().authenticated()
       )
       .exceptionHandling(exceptionHandling -> exceptionHandling
