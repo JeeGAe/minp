@@ -1,6 +1,8 @@
 export const MAIN_PATH = () => '/';
 export const SIGN_UP_PATH = () => '/signup';
 export const SIGN_IN_PATH = () => '/signin';
+export const BOARD_PATH = () => '/board';
+export const BOARD_WRITE_PATH = () => 'write'
 
 export const PORT = '3300';
 export const DOMAIN = `http://localhost:${PORT}`;

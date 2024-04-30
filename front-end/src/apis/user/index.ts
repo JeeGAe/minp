@@ -4,7 +4,6 @@ import { GetSignInUserResponseDto } from "../response/user";
 
 export const getSignInUserRequest = async (accessToken : string) => {
 
-  if(!accessToken) return ;
   const bearerToken = `Bearer ${accessToken}`;
   
   const result = await fetch(GET_SIGN_IN_USER_URL, {
@@ -32,4 +31,5 @@ export const getSignInUserRequest = async (accessToken : string) => {
   })
 
   return result;
+  
 }

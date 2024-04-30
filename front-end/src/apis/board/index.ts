@@ -5,8 +5,7 @@ import PostBoardResponseDto from "../response/board/postBoard.response.dto";
 
 export const postBoardRequest = async (requestBody : PostBoardRequestDto, accessToken : string) => {
 
-  if(!accessToken) return ;
-  const bearerToken = `bearer ${accessToken}`;
+  const bearerToken = `Bearer ${accessToken}`;
 
   const result = fetch(POST_BOARD_URL, {
     method : 'POST',
@@ -24,8 +23,8 @@ export const postBoardRequest = async (requestBody : PostBoardRequestDto, access
   })
   .then(response => {
     const responseBody : PostBoardResponseDto = response;
-    if(!requestBody) return null;
-    return requestBody;
+    if(!responseBody) return null;
+    return responseBody;
   })
   .catch(error => {
     const requestBody : ResponseDto = error;

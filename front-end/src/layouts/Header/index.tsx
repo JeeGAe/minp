@@ -1,18 +1,32 @@
+import './style.css';
 import { useCookies } from 'react-cookie';
-import { useAppDispatch, useAppSelector } from '../../hooks/store.hook';
-import { UserInfo } from '../../types/interface';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { UserInfo } from '../../types/interface';
+import { SIGN_IN_PATH } from '../../constants';
+
+
+import { useAppDispatch, useAppSelector } from '../../hooks/store.hook';
 import { signIn, signOut } from '../../store/user-slice.store';
+
 import { getSignInUserRequest } from '../../apis/user';
 import { GetSignInUserResponseDto } from '../../apis/response/user';
 import { ResponseDto } from '../../apis/response';
 
+// component
+import Button from '../../components/Button';
+
+
 export default function Header() {
+  // react-redux 스토어
   const user : UserInfo = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
 
   // 쿠키 상태
   const [cookies, setCookies] = useCookies(['accessToken']);
+
+  const navigate = useNavigate();
 
   const getSignInResponseHandler = (responseBody : GetSignInUserResponseDto | ResponseDto | null) => {
     if(!responseBody) { 
@@ -30,7 +44,7 @@ export default function Header() {
       return ;
     }
     if(code === 'AF') {
-      alert("만료된 권한입니다.");
+      alert("권한이 없습니다.");
       return ;
     }
     if(code === 'SU' && 'email' in responseBody) {
@@ -56,10 +70,19 @@ export default function Header() {
   },[cookies.accessToken])
   
   return (
-    <div>
-      {`${user.email}`}
-      {`${user.nickname}`}
-      {`${user.isLogin}`}
+    <div id='header'>
+      <div className='logo-container'>
+        <div className='logo-text'>{'minP'}</div>
+      </div>
+      <div className='right-side-container'>
+        <div className='search-box'></div>
+        <div className='user-status-box'>
+          {!user.isLogin ?
+            <Button text={'Sign-in'} onClick={() => navigate(SIGN_IN_PATH())}/> : 
+            <div>{user.nickname}</div>
+          }
+        </div>
+      </div>
     </div>
   )
 }

@@ -1,20 +1,24 @@
 import { FILE_UPLOAD_URL } from "../../constants"
 
-export const uploadImageRequest = async (data: FormData) => {
+export const uploadImageRequest = async (data: FormData, accessToken : string) => {
+
+  const bearerToken = `Bearer ${accessToken}`;
 
   const result = await fetch(FILE_UPLOAD_URL, {
     method : 'POST',
     headers : {
-      'Content-Type' : 'multipart/form-data'
+      //'Content-Type' : 'multipart/form-data',
+      'Authorization' : bearerToken
     },
     body : data
   })
   .then(async (response) => {
-    if(!response.ok) {
-      throw await response.json();
+    console.log(response)
+    if(response.ok) {
+      return response.text();
     }
 
-    return response.json();
+    throw await response.text();
   })
   .then(response => {
     const responseBody : string = response;
@@ -23,5 +27,7 @@ export const uploadImageRequest = async (data: FormData) => {
   .catch(error => {
     return null;
   })
+
+  return result;
 
 }

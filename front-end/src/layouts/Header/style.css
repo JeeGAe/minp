@@ -1,0 +1,18 @@
+#header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: antiquewhite;
+  height: 55px;
+}
+
+.logo-text {
+  padding-left: 20px;
+
+  font-size: 35px;
+}
+
+.right-side-container {
+  padding-right: 20px;
+}
