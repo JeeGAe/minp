@@ -2,10 +2,10 @@
 import './style.css';
 
 interface Props {
-  text : string,
-  size? : 'wide',
+  text : string;
+  size? : 'wide';
 
-  onClick? : () => void
+  onClick? : () => void;
 }
 
 const Button = (props:Props) => {
