@@ -74,8 +74,6 @@ export default function BoardWrite() {
 
   const onChangeImageHandler = (event : ChangeEvent<HTMLInputElement>) => {
 
-    
-
     const files = event.target.files;
     if(!files) return ;
     if(files.length > 5) {
@@ -86,7 +84,6 @@ export default function BoardWrite() {
     const fileList = [];
     const newThumbnailList = [];
     
-    
     for(let i = 0; i < files.length; i++) {
       const filesUrl = URL.createObjectURL(files[i]);
 
@@ -94,6 +91,7 @@ export default function BoardWrite() {
       fileList.push(files[i]);
     }
 
+    // 같은 파일 업로드 시 onChage 이벤트 발생이 안되어 초기화하여 해결
     event.target.value = "";
 
     setThumbnails(newThumbnailList);
@@ -122,7 +120,7 @@ export default function BoardWrite() {
 
   }
 
-  const submit = async () => {
+  const onClickUploadButtonHandler = async () => {
     
     const boardImageList : string[] = [];
 
@@ -153,7 +151,7 @@ export default function BoardWrite() {
     <div id='board-write-wrapper'>
       <div className='board-write-container'>
         <div className='board-write-upload-button-box'>
-        <Button text={'업로드'} onClick={submit}/>
+        <Button text={'업로드'} onClick={onClickUploadButtonHandler}/>
         </div>
         <div className='board-write-title-box'>
           <textarea ref={titleInputRef} rows={1} value={title} onChange={onChangeTitleHander} placeholder='제목을 입력하세요.'/>

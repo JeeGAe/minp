@@ -8,9 +8,12 @@ import java.util.ArrayList;
 
 import com.reactspring.backend.dto.request.board.PostBoardRequestDto;
 import com.reactspring.backend.dto.response.ResponseDto;
+import com.reactspring.backend.dto.response.board.GetUserBoardListResponseDto;
 import com.reactspring.backend.dto.response.board.PostBoardResponseDto;
 import com.reactspring.backend.entity.BoardEntity;
+import com.reactspring.backend.entity.BoardListViewEntity;
 import com.reactspring.backend.entity.ImageEntity;
+import com.reactspring.backend.repository.BoardListViewRepository;
 import com.reactspring.backend.repository.BoardRepository;
 import com.reactspring.backend.repository.ImageRepository;
 import com.reactspring.backend.repository.UserRepository;
@@ -25,6 +28,28 @@ public class BoardServiceImplement implements BoardService {
   private final UserRepository userRepository;
   private final BoardRepository boardRepository;
   private final ImageRepository imageRepository;
+  private final BoardListViewRepository boardListViewRepository;
+
+  @Override
+  public ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(String email) {
+
+    List<BoardListViewEntity> boardListViewEntities = new ArrayList<>();
+
+    try {
+
+      boolean existedEmail = userRepository.existsByEmail(email);
+      if(!existedEmail) return GetUserBoardListResponseDto.noExistUser();
+
+      boardListViewEntities = boardListViewRepository.findByWriterEmailOrderByWriteTimeDesc(email);
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseDto.internalError();
+    }
+
+    return GetUserBoardListResponseDto.success(boardListViewEntities);
+    
+  }
 
   @Override
   public ResponseEntity<? super PostBoardResponseDto> postBoard(PostBoardRequestDto dto, String email) {
