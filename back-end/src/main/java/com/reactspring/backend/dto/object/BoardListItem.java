@@ -18,6 +18,7 @@ public class BoardListItem {
   private String title;
   private String content;
   private String writerEmail;
+  private String writerNickname;
   private String writeTime;
   private String recentModifyTime;
   private int viewCount;
@@ -31,6 +32,7 @@ public class BoardListItem {
     this.content = boardListViewEntity.getContent();
     this.writerEmail = boardListViewEntity.getWriterEmail();
     this.writeTime = boardListViewEntity.getWriteTime();
+    this.writerNickname = boardListViewEntity.getWriterNickname();
     this.recentModifyTime = boardListViewEntity.getRecentModifyTime();
     this.viewCount = boardListViewEntity.getViewCount();
     this.favoriteCount = boardListViewEntity.getFavoriteCount();

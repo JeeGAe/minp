@@ -14,6 +14,7 @@ import ThumbnailCard from '../../../components/ThumbnailCard';
 
 export default function BoardWrite() {
 
+  // states
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [images, setImages] = useState<File[]>([]);

@@ -79,7 +79,7 @@ export default function Header() {
         <div className='user-status-box'>
           {!user.isLogin ?
             <Button text={'Sign-in'} onClick={() => navigate(SIGN_IN_PATH())}/> : 
-            <div>{user.nickname}</div>
+            <div onClick={() => navigate('/user')}>{user.nickname}</div>
           }
         </div>
       </div>
