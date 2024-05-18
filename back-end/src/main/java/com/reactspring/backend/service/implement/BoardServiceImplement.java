@@ -6,9 +6,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.ArrayList;
 
+import com.reactspring.backend.dto.request.board.PatchBoardRequestDto;
 import com.reactspring.backend.dto.request.board.PostBoardRequestDto;
 import com.reactspring.backend.dto.response.ResponseDto;
+import com.reactspring.backend.dto.response.board.GetBoardResponseDto;
 import com.reactspring.backend.dto.response.board.GetUserBoardListResponseDto;
+import com.reactspring.backend.dto.response.board.PatchBoardResponseDto;
 import com.reactspring.backend.dto.response.board.PostBoardResponseDto;
 import com.reactspring.backend.entity.BoardEntity;
 import com.reactspring.backend.entity.BoardListViewEntity;
@@ -17,8 +20,10 @@ import com.reactspring.backend.repository.BoardListViewRepository;
 import com.reactspring.backend.repository.BoardRepository;
 import com.reactspring.backend.repository.ImageRepository;
 import com.reactspring.backend.repository.UserRepository;
+import com.reactspring.backend.repository.resultSet.GetBoardResultSet;
 import com.reactspring.backend.service.BoardService;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -52,6 +57,32 @@ public class BoardServiceImplement implements BoardService {
   }
 
   @Override
+  public ResponseEntity<? super GetBoardResponseDto> getBoard(int boardNumber) {
+
+    GetBoardResultSet resultSet = null;
+    List<ImageEntity> imageEntities = new ArrayList<>();
+    
+    try {
+      
+      resultSet = boardRepository.getBoard(boardNumber);
+      if(resultSet == null) return GetBoardResponseDto.noExistBoard();
+
+      imageEntities = imageRepository.findByBoardNumber(boardNumber);
+
+      BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+      boardEntity.increaseViewCount();
+      boardRepository.save(boardEntity);
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseDto.internalError();
+    }
+
+    return GetBoardResponseDto.success(resultSet, imageEntities);
+
+  }
+
+  @Override
   public ResponseEntity<? super PostBoardResponseDto> postBoard(PostBoardRequestDto dto, String email) {
 
     try {
@@ -80,6 +111,46 @@ public class BoardServiceImplement implements BoardService {
 
     return PostBoardResponseDto.success();
 
+  }
+
+  @Override
+  @Transactional
+  public ResponseEntity<? super PatchBoardResponseDto> patchBoard(PatchBoardRequestDto dto, Integer boardNumber,
+      String email) {
+
+        try {
+
+          BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+          if(boardEntity == null) return PatchBoardResponseDto.noExistBoard();
+
+          boolean existedUser = userRepository.existsByEmail(email);
+          if(!existedUser) return PatchBoardResponseDto.noExistUser();
+
+          String writerEmail = boardEntity.getWriterEmail();
+          boolean isWriter = writerEmail.equals(email);
+          if(!isWriter) return PatchBoardResponseDto.noPermisson();
+
+          boardEntity.patchBoard(dto);
+          boardRepository.save(boardEntity);
+
+          List<String> boardImageList = dto.getBoardImageList();
+          
+          imageRepository.deleteByBoardNumber(boardNumber);
+          List<ImageEntity> imageEntities = new ArrayList<>();
+
+          for(String image : boardImageList) {
+            ImageEntity imageEntity = new ImageEntity(boardNumber, image);
+            imageEntities.add(imageEntity);
+          }
+
+          imageRepository.saveAll(imageEntities);
+
+        } catch (Exception e) {
+          e.printStackTrace();
+          return ResponseDto.internalError();
+        }
+
+        return PatchBoardResponseDto.success();
   }
   
 }

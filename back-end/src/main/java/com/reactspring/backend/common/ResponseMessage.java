@@ -11,6 +11,7 @@ public interface ResponseMessage {
   String DUPLICATE_NICKNAME = "Duplicate nickname";
   String DUPLICATE_PHONE_NUMBER = "Duplicate phone number";
   String NOT_EXISTED_USER = "Not existed user";
+  String NOT_EXISTED_BOARD = "Not existed board";
 
   // status 401
   String SIGN_IN_FAILED = "Sign in failed";

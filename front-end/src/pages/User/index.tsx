@@ -25,11 +25,6 @@ export default function User() {
   const getAllUserBoarListResponseHandler = (responseBody : GetAllUserBoardListResponseDto | ResponseDto | null) => {
     if(!responseBody) return ;
 
-    if(responseBody.code === 'SU' && 'userBoardList' in responseBody) {
-      const { userBoardList } = responseBody;
-      setBoardListItem(userBoardList);
-    }
-
     if(responseBody.code === 'NU') {
       alert("없는 유저입니다.");
       return ;
@@ -37,6 +32,16 @@ export default function User() {
     if(responseBody.code === 'IE') {
       alert("서버 에러입니다.");
       return ;
+    }
+
+    // if(responseBody.code === 'SU' && 'userBoardList' in responseBody) {
+    //   const { userBoardList } = responseBody;
+    //   setBoardListItem(userBoardList);
+    // }
+
+    if(responseBody.code === 'SU') {
+      const { userBoardList } = responseBody as GetAllUserBoardListResponseDto;
+      setBoardListItem(userBoardList);
     }
   }
 

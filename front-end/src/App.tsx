@@ -9,7 +9,8 @@ import SignIn from './pages/SignIn';
 import BoardWrite from './pages/Board/Write';
 import User from './pages/User';
 
-import { BOARD_PATH, BOARD_WRITE_PATH, MAIN_PATH, SIGN_IN_PATH, SIGN_UP_PATH, USER_PATH } from './constants';
+import { BOARD_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, MAIN_PATH, SIGN_IN_PATH, SIGN_UP_PATH, USER_PATH } from './constants';
+import BoardUpdate from './pages/Board/Update';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path={USER_PATH()} element={<User />}/>
           <Route path={BOARD_PATH()} >
             <Route path={BOARD_WRITE_PATH()} element={<BoardWrite />} />
+            <Route path={BOARD_UPDATE_PATH()} element={<BoardUpdate />} />
           </Route>
         </Route>
       </Routes>

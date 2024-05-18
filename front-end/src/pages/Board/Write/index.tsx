@@ -7,7 +7,7 @@ import { uploadImageRequest } from '../../../apis/file';
 import { postBoardRequest } from '../../../apis/board';
 import { PostBoardRequestDto } from '../../../apis/request/board';
 import { useCookies } from 'react-cookie';
-import PostBoardResponseDto from '../../../apis/response/board/postBoard.response.dto';
+import { PostBoardResponseDto } from '../../../apis/response/board';
 import { ResponseDto } from '../../../apis/response';
 import { useNavigate } from 'react-router-dom';
 import ThumbnailCard from '../../../components/ThumbnailCard';
@@ -33,6 +33,7 @@ export default function BoardWrite() {
   }
 
   const onClickImageDeleteButtonHandler = (index:number) => {
+
     if(images.length <= 1) {
       setImages([]);
       setThumbnails([]);
@@ -55,7 +56,7 @@ export default function BoardWrite() {
 
   }
 
-  const onChangeTitleHander = (event : ChangeEvent<HTMLTextAreaElement>) => {
+  const onChangeTitleHandler = (event : ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = event.target;
     setTitle(value);
 
@@ -64,7 +65,7 @@ export default function BoardWrite() {
     titleInputRef.current.style.height = `${titleInputRef.current.scrollHeight}px`;
   }
 
-  const onChangeContentHander = (event : ChangeEvent<HTMLTextAreaElement>) => {
+  const onChangeContentHandler = (event : ChangeEvent<HTMLTextAreaElement>) => {
     const { value } = event.target;
     setContent(value);
 
@@ -146,8 +147,6 @@ export default function BoardWrite() {
 
   }
 
-  console.log(images, thumbnails);
-
   return (
     <div id='board-write-wrapper'>
       <div className='board-write-container'>
@@ -155,10 +154,10 @@ export default function BoardWrite() {
         <Button text={'업로드'} onClick={onClickUploadButtonHandler}/>
         </div>
         <div className='board-write-title-box'>
-          <textarea ref={titleInputRef} rows={1} value={title} onChange={onChangeTitleHander} placeholder='제목을 입력하세요.'/>
+          <textarea ref={titleInputRef} rows={1} value={title} onChange={onChangeTitleHandler} placeholder='제목을 입력하세요.'/>
         </div>
         <div className='board-write-content-box'>
-          <textarea ref={contentInputRef} value={content} onChange={onChangeContentHander} placeholder='내용을 입력하세요.' />
+          <textarea ref={contentInputRef} value={content} onChange={onChangeContentHandler} placeholder='내용을 입력하세요.' />
         </div>
         <div className='board-write-add-image-button-box'>
           <input ref={imageInputRef} type='file' multiple onChange={onChangeImageHandler}/>

@@ -1,5 +1,6 @@
 package com.reactspring.backend.entity;
 
+import com.reactspring.backend.dto.request.board.PatchBoardRequestDto;
 import com.reactspring.backend.dto.request.board.PostBoardRequestDto;
 
 import java.time.Instant;
@@ -48,6 +49,15 @@ public class BoardEntity {
     this.favoriteCount = 0;
     this.commentCount = 0;
 
+  }
+
+  public void increaseViewCount() {
+    this.viewCount++;
+  }
+
+  public void patchBoard(PatchBoardRequestDto dto) {
+    this.title = dto.getTitle();
+    this.content = dto.getTitle();
   }
 
 }

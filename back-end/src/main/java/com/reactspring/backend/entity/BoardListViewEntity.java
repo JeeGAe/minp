@@ -25,6 +25,6 @@ public class BoardListViewEntity {
   private int commentCount;
   private String writerEmail;
   private String writerNickname;
-  private String mainImage;
+  private String boardImageList;
 
 }

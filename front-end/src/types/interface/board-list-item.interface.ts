@@ -9,5 +9,5 @@ export default interface BoardListItem {
   viewCount : number;
   favoriteCount : number;
   commentCount : number;
-  mainImage : string;
+  boardImageList : string[];
 }

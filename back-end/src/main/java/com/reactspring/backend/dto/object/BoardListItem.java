@@ -1,6 +1,7 @@
 package com.reactspring.backend.dto.object;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.reactspring.backend.entity.BoardListViewEntity;
@@ -24,9 +25,19 @@ public class BoardListItem {
   private int viewCount;
   private int favoriteCount;
   private int commentCount;
-  private String mainImage;
+  private List<String> boardImageList;
 
   public BoardListItem(BoardListViewEntity boardListViewEntity) {
+
+    String boardImageListString = boardListViewEntity.getBoardImageList();
+    List<String> boardImageList;
+
+    if(boardImageListString == null) {
+      boardImageList = new ArrayList<>();
+    } else {
+      boardImageList = Arrays.asList(boardImageListString.split(","));
+    }
+
     this.boardNumber = boardListViewEntity.getBoardNumber();
     this.title = boardListViewEntity.getTitle();
     this.content = boardListViewEntity.getContent();
@@ -37,7 +48,7 @@ public class BoardListItem {
     this.viewCount = boardListViewEntity.getViewCount();
     this.favoriteCount = boardListViewEntity.getFavoriteCount();
     this.commentCount = boardListViewEntity.getCommentCount();
-    this.mainImage = boardListViewEntity.getMainImage();
+    this.boardImageList = boardImageList;
   }
 
   public static List<BoardListItem> getList(List<BoardListViewEntity> boardListViewEntities) {
