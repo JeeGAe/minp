@@ -27,3 +27,5 @@ export const GET_ALL_USER_BOARD_LIST_URL = `${API_DOMAIN}/board/all-user-board`;
 export const POST_BOARD_URL = `${API_DOMAIN}/board`;
 
 export const PATCH_BOARD_URL = (boardNumber : number) => `${API_DOMAIN}/board/${boardNumber}`;
+
+export const DELETE_BOARD_URL = (boardNumber : number) => `${API_DOMAIN}/board/${boardNumber}`;

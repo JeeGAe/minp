@@ -2,22 +2,17 @@ import { useNavigate } from 'react-router-dom';
 import { BoardListItem } from '../../types/interface';
 import Button from '../Button';
 import './style.css';
-import { BOARD_PATH, BOARD_UPDATE_PATH } from '../../constants';
 
 interface Props {
-  boardListItem : BoardListItem
+  boardListItem : BoardListItem;
+  onClickUpdateButton : () => void
+  onClickDeleteButton : () => void
 }
 
 export default function UserBoardListCard(props:Props) {
 
-  const { boardListItem } = props;
+  const { boardListItem, onClickUpdateButton, onClickDeleteButton } = props;
   const { title, boardImageList } = boardListItem;
-
-  const navigate = useNavigate();
-
-  const onClickUpdateButtonHandler = () => {
-    navigate(`/board/update`, { state : { boardListItem } })
-  }
 
   return (
     <div className='user-board-list-card-wrapper'>
@@ -31,10 +26,10 @@ export default function UserBoardListCard(props:Props) {
       </div>
       <div className='user-board-list-card-right-container'>
         <div className='user-board-list-card-modify-button-box'>
-          <Button text={'수정'} onClick={onClickUpdateButtonHandler}/>
+          <Button text={'수정'} onClick={onClickUpdateButton}/>
         </div>
         <div className='user-board-list-card-delete-button-box'>
-          <Button text={'삭제'} />
+          <Button text={'삭제'} onClick={onClickDeleteButton}/>
         </div>
       </div>
     </div>

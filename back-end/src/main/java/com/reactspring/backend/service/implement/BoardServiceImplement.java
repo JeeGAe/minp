@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import com.reactspring.backend.dto.request.board.PatchBoardRequestDto;
 import com.reactspring.backend.dto.request.board.PostBoardRequestDto;
 import com.reactspring.backend.dto.response.ResponseDto;
+import com.reactspring.backend.dto.response.board.DeleteBoardResponseDto;
 import com.reactspring.backend.dto.response.board.GetBoardResponseDto;
 import com.reactspring.backend.dto.response.board.GetUserBoardListResponseDto;
 import com.reactspring.backend.dto.response.board.PatchBoardResponseDto;
@@ -23,7 +24,6 @@ import com.reactspring.backend.repository.UserRepository;
 import com.reactspring.backend.repository.resultSet.GetBoardResultSet;
 import com.reactspring.backend.service.BoardService;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -114,17 +114,16 @@ public class BoardServiceImplement implements BoardService {
   }
 
   @Override
-  @Transactional
   public ResponseEntity<? super PatchBoardResponseDto> patchBoard(PatchBoardRequestDto dto, Integer boardNumber,
       String email) {
 
         try {
 
-          BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
-          if(boardEntity == null) return PatchBoardResponseDto.noExistBoard();
-
           boolean existedUser = userRepository.existsByEmail(email);
           if(!existedUser) return PatchBoardResponseDto.noExistUser();
+
+          BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+          if(boardEntity == null) return PatchBoardResponseDto.noExistBoard();
 
           String writerEmail = boardEntity.getWriterEmail();
           boolean isWriter = writerEmail.equals(email);
@@ -151,6 +150,32 @@ public class BoardServiceImplement implements BoardService {
         }
 
         return PatchBoardResponseDto.success();
+  }
+
+  @Override
+  public ResponseEntity<? super DeleteBoardResponseDto> deleteBoard(Integer boardNumber, String email) {
+    
+    try {
+
+      boolean existedEmail = userRepository.existsByEmail(email);
+      if(!existedEmail) return DeleteBoardResponseDto.noExistUser();
+
+      BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+      if(boardEntity == null) return DeleteBoardResponseDto.noExistBoard();
+
+      String writerEmail = boardEntity.getWriterEmail();
+      boolean isWriter = writerEmail.equals(email);
+      if(!isWriter) return DeleteBoardResponseDto.noPermission();
+
+      imageRepository.deleteByBoardNumber(boardNumber);
+      boardRepository.delete(boardEntity);
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseDto.internalError();
+    }
+
+    return DeleteBoardResponseDto.success();
   }
   
 }
