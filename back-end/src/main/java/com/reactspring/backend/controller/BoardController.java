@@ -5,10 +5,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.reactspring.backend.dto.request.board.PatchBoardRequestDto;
 import com.reactspring.backend.dto.request.board.PostBoardRequestDto;
+import com.reactspring.backend.dto.request.board.PostCommentRequestDto;
 import com.reactspring.backend.dto.response.board.DeleteBoardResponseDto;
 import com.reactspring.backend.dto.response.board.GetUserBoardListResponseDto;
 import com.reactspring.backend.dto.response.board.PatchBoardResponseDto;
 import com.reactspring.backend.dto.response.board.PostBoardResponseDto;
+import com.reactspring.backend.dto.response.board.PostCommentResponseDto;
+import com.reactspring.backend.dto.response.board.PutFavoriteResponseDto;
 import com.reactspring.backend.service.BoardService;
 
 import jakarta.validation.Valid;
@@ -22,6 +25,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 
@@ -46,6 +51,26 @@ public class BoardController {
     @AuthenticationPrincipal String email) {
       
       ResponseEntity<? super PostBoardResponseDto> response = boardService.postBoard(requestBody, email);
+      return response;
+  }
+
+  @PostMapping("/{boardNumber}/comment")
+  public ResponseEntity<? super PostCommentResponseDto> postComment(
+    @RequestBody @Valid PostCommentRequestDto requestBody,
+    @PathVariable("boardNumber") Integer boardNumber,
+    @AuthenticationPrincipal String email
+  ) {
+
+    ResponseEntity<? super PostCommentResponseDto> response = boardService.postComment(requestBody, boardNumber, email);
+    return response;
+  }
+  
+  @PutMapping("/{boardNumber}/favorite")
+  public ResponseEntity<? super PutFavoriteResponseDto> putFavorite(
+    @PathVariable("boardNumber") Integer boardNumber,
+    @AuthenticationPrincipal String email) {
+
+      ResponseEntity<? super PutFavoriteResponseDto> response = boardService.putFavorite(boardNumber, email);
       return response;
   }
 

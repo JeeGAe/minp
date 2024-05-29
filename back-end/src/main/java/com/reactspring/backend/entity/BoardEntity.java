@@ -55,6 +55,18 @@ public class BoardEntity {
     this.viewCount++;
   }
 
+  public void increaseCommentCount() {
+    this.commentCount++;
+  }
+
+  public void increaseFavoriteCount() {
+    this.favoriteCount++;
+  }
+
+  public void decreaseFavoriteCount() {
+    this.favoriteCount--;
+  }
+
   public void patchBoard(PatchBoardRequestDto dto) {
     this.title = dto.getTitle();
     this.content = dto.getTitle();

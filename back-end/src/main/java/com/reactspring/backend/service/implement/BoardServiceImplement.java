@@ -8,17 +8,24 @@ import java.util.ArrayList;
 
 import com.reactspring.backend.dto.request.board.PatchBoardRequestDto;
 import com.reactspring.backend.dto.request.board.PostBoardRequestDto;
+import com.reactspring.backend.dto.request.board.PostCommentRequestDto;
 import com.reactspring.backend.dto.response.ResponseDto;
 import com.reactspring.backend.dto.response.board.DeleteBoardResponseDto;
 import com.reactspring.backend.dto.response.board.GetBoardResponseDto;
 import com.reactspring.backend.dto.response.board.GetUserBoardListResponseDto;
 import com.reactspring.backend.dto.response.board.PatchBoardResponseDto;
 import com.reactspring.backend.dto.response.board.PostBoardResponseDto;
+import com.reactspring.backend.dto.response.board.PostCommentResponseDto;
+import com.reactspring.backend.dto.response.board.PutFavoriteResponseDto;
 import com.reactspring.backend.entity.BoardEntity;
 import com.reactspring.backend.entity.BoardListViewEntity;
+import com.reactspring.backend.entity.CommentEntity;
+import com.reactspring.backend.entity.FavoriteEntity;
 import com.reactspring.backend.entity.ImageEntity;
 import com.reactspring.backend.repository.BoardListViewRepository;
 import com.reactspring.backend.repository.BoardRepository;
+import com.reactspring.backend.repository.CommentRepository;
+import com.reactspring.backend.repository.FavoriteRepository;
 import com.reactspring.backend.repository.ImageRepository;
 import com.reactspring.backend.repository.UserRepository;
 import com.reactspring.backend.repository.resultSet.GetBoardResultSet;
@@ -34,6 +41,8 @@ public class BoardServiceImplement implements BoardService {
   private final BoardRepository boardRepository;
   private final ImageRepository imageRepository;
   private final BoardListViewRepository boardListViewRepository;
+  private final CommentRepository commentRepository;
+  private final FavoriteRepository favoriteRepository;
 
   @Override
   public ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(String email) {
@@ -57,7 +66,7 @@ public class BoardServiceImplement implements BoardService {
   }
 
   @Override
-  public ResponseEntity<? super GetBoardResponseDto> getBoard(int boardNumber) {
+  public ResponseEntity<? super GetBoardResponseDto> getBoard(Integer boardNumber) {
 
     GetBoardResultSet resultSet = null;
     List<ImageEntity> imageEntities = new ArrayList<>();
@@ -112,6 +121,64 @@ public class BoardServiceImplement implements BoardService {
     return PostBoardResponseDto.success();
 
   }
+
+  @Override
+  public ResponseEntity<? super PostCommentResponseDto> postComment(PostCommentRequestDto dto, Integer boardNumber, String email) {
+
+    try {
+
+      boolean existedEmail = userRepository.existsByEmail(email);
+      if(!existedEmail) return PostCommentResponseDto.noExistUser();
+
+      BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+      if(boardEntity == null) return PostCommentResponseDto.noExistBoard();
+
+      CommentEntity commentEntity = new CommentEntity(dto, boardNumber, email);
+      commentRepository.save(commentEntity);
+
+      boardEntity.increaseCommentCount();
+      boardRepository.save(boardEntity);
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseDto.internalError();
+    }
+
+    return PostCommentResponseDto.success(); 
+
+  }
+
+  @Override
+  public ResponseEntity<? super PutFavoriteResponseDto> putFavorite(Integer boardNumber, String email) {
+
+    try {
+
+      boolean existedEmail = userRepository.existsByEmail(email);
+      if(!existedEmail) return PutFavoriteResponseDto.noExistUser();
+
+      BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+      if(boardEntity == null) return PutFavoriteResponseDto.noExistBoard();
+
+      FavoriteEntity favoriteEntity = favoriteRepository.findByBoardNumberAndUserEmail(boardNumber, email);
+      if(favoriteEntity == null) {
+        favoriteEntity = new FavoriteEntity(email, boardNumber);
+        favoriteRepository.save(favoriteEntity);
+        boardEntity.increaseFavoriteCount();
+      } else {
+        favoriteRepository.delete(favoriteEntity);
+        boardEntity.decreaseFavoriteCount();
+      }
+
+      boardRepository.save(boardEntity);
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseDto.internalError();
+    }
+
+    return PutFavoriteResponseDto.success();
+  }
+
 
   @Override
   public ResponseEntity<? super PatchBoardResponseDto> patchBoard(PatchBoardRequestDto dto, Integer boardNumber,
@@ -177,5 +244,7 @@ public class BoardServiceImplement implements BoardService {
 
     return DeleteBoardResponseDto.success();
   }
+
+
   
 }
