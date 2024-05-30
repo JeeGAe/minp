@@ -7,6 +7,8 @@ import com.reactspring.backend.dto.request.board.PatchBoardRequestDto;
 import com.reactspring.backend.dto.request.board.PostBoardRequestDto;
 import com.reactspring.backend.dto.request.board.PostCommentRequestDto;
 import com.reactspring.backend.dto.response.board.DeleteBoardResponseDto;
+import com.reactspring.backend.dto.response.board.GetCommentListResponseDto;
+import com.reactspring.backend.dto.response.board.GetFavoriteListResponseDto;
 import com.reactspring.backend.dto.response.board.GetUserBoardListResponseDto;
 import com.reactspring.backend.dto.response.board.PatchBoardResponseDto;
 import com.reactspring.backend.dto.response.board.PostBoardResponseDto;
@@ -17,6 +19,7 @@ import com.reactspring.backend.service.BoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +29,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -42,6 +47,20 @@ public class BoardController {
       
     ResponseEntity<? super GetUserBoardListResponseDto> response = boardService.getUserBoardList(email);
     return response;
+  }
+
+  @GetMapping("/{boardNumber}/favorite")
+  public ResponseEntity<? super GetFavoriteListResponseDto> getFavoriteList(
+    @PathVariable("boardNumber") Integer boardNumber) {
+      ResponseEntity<? super GetFavoriteListResponseDto> response = boardService.getFavoriteList(boardNumber);
+      return response;
+  }
+  
+  @GetMapping("/{boardNumber/comment}")
+  public ResponseEntity<? super GetCommentListResponseDto> getCommentList(
+    @PathVariable("boardNumber") Integer boardNumber) {
+      ResponseEntity<? super GetCommentListResponseDto> response = boardService.getCommentList(boardNumber);
+      return response;
   }
   
 

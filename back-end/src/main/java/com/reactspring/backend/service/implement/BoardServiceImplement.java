@@ -12,6 +12,8 @@ import com.reactspring.backend.dto.request.board.PostCommentRequestDto;
 import com.reactspring.backend.dto.response.ResponseDto;
 import com.reactspring.backend.dto.response.board.DeleteBoardResponseDto;
 import com.reactspring.backend.dto.response.board.GetBoardResponseDto;
+import com.reactspring.backend.dto.response.board.GetCommentListResponseDto;
+import com.reactspring.backend.dto.response.board.GetFavoriteListResponseDto;
 import com.reactspring.backend.dto.response.board.GetUserBoardListResponseDto;
 import com.reactspring.backend.dto.response.board.PatchBoardResponseDto;
 import com.reactspring.backend.dto.response.board.PostBoardResponseDto;
@@ -29,6 +31,8 @@ import com.reactspring.backend.repository.FavoriteRepository;
 import com.reactspring.backend.repository.ImageRepository;
 import com.reactspring.backend.repository.UserRepository;
 import com.reactspring.backend.repository.resultSet.GetBoardResultSet;
+import com.reactspring.backend.repository.resultSet.GetCommentListResultSet;
+import com.reactspring.backend.repository.resultSet.GetFavoriteListResultSet;
 import com.reactspring.backend.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
@@ -90,6 +94,48 @@ public class BoardServiceImplement implements BoardService {
     return GetBoardResponseDto.success(resultSet, imageEntities);
 
   }
+
+  @Override
+  public ResponseEntity<? super GetFavoriteListResponseDto> getFavoriteList(Integer boardNumber) {
+
+    List<GetFavoriteListResultSet> resultSets = new ArrayList<>();
+
+    try {
+
+      boolean existedBoard = boardRepository.existsByBoardNumber(boardNumber);
+      if(!existedBoard) return GetFavoriteListResponseDto.noExistBoard();
+
+      resultSets = favoriteRepository.getFavoriteList(boardNumber);
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseDto.internalError();
+    }
+
+    return GetFavoriteListResponseDto.success(resultSets);
+  }
+
+  @Override
+  public ResponseEntity<? super GetCommentListResponseDto> getCommentList(Integer boardNumber) {
+
+    List<GetCommentListResultSet> resultSets = new ArrayList<>();
+
+    try {
+      
+      boolean existedBoard = boardRepository.existsByBoardNumber(boardNumber);
+      if(!existedBoard) return GetCommentListResponseDto.noExistBoard();
+
+      resultSets = commentRepository.getCommentList(boardNumber);
+
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseDto.internalError();
+    }
+
+    return GetCommentListResponseDto.success(resultSets);
+  }
+
+
 
   @Override
   public ResponseEntity<? super PostBoardResponseDto> postBoard(PostBoardRequestDto dto, String email) {
@@ -246,5 +292,4 @@ public class BoardServiceImplement implements BoardService {
   }
 
 
-  
 }
