@@ -1,11 +1,11 @@
-import { DELETE_BOARD_URL, GET_ALL_USER_BOARD_LIST_URL, PATCH_BOARD_URL, POST_BOARD_URL } from "../../constants"
-import { PatchBoardRequestDto, PostBoardRequestDto } from "../request/board"
+import { DELETE_BOARD_URL, GET_ALL_USER_BOARD_LIST_URL, GET_BOARD_URL, GET_COMMENT_LIST_URL, GET_FAVORITE_LIST_URL, PATCH_BOARD_URL, POST_BOARD_URL, POST_COMMENT_URL, PUT_FAVORITE_URL } from "../../constants"
+import { PatchBoardRequestDto, PostBoardRequestDto, PostCommentRequestDto } from "../request/board"
 import { ResponseDto } from "../response";
-import { DeleteBoardResponseDto, PatchBoardResponseDto } from "../response/board";
+import { DeleteBoardResponseDto, GetBoardResponseDto, GetCommentListResponseDto, GetFavoriteListResponseDto, PatchBoardResponseDto, PostCommentResponseDto, PutFavoriteResponseDto } from "../response/board";
 import getAllUserBoarListResponseDto from "../response/board/getAllUserBoardList.response.dto";
 import PostBoardResponseDto from "../response/board/postBoard.response.dto";
 
-export const getAllUserBoarList = async (accessToken : string) => {
+export const getAllUserBoarListRequest = async (accessToken : string) => {
 
   const bearerToken = `Bearer ${accessToken}`;
 
@@ -34,6 +34,73 @@ export const getAllUserBoarList = async (accessToken : string) => {
 
   return result;
   
+}
+
+export const getBoardRequest = async (boardNumber : number|string) => {
+
+  const result = fetch(GET_BOARD_URL(boardNumber))
+  .then(async(response) => {
+    if(!response.ok) {
+      throw await response.json();
+    }
+    return response.json();
+  })
+  .then(response => {
+    const responseBody : GetBoardResponseDto = response;
+    if(!responseBody) return null;
+    return responseBody;
+  })
+  .catch(error => {
+    const responseBody : ResponseDto = error;
+    if(!responseBody) return null;
+    return responseBody;
+  })
+
+  return result;
+}
+
+export const getFavoriteListRequest = async (boardNumber: number|string) => {
+  
+  const result = await fetch(GET_FAVORITE_LIST_URL(boardNumber))
+  .then(async (response) => {
+    if(!response.ok) {
+      throw await response.json();
+    }
+    return response.json();
+  })
+  .then(response => {
+    const responseBody : GetFavoriteListResponseDto = response;
+    if(!responseBody) return null;
+    return responseBody;
+  })
+  .catch(error => {
+    const responseBody : ResponseDto = error;
+    if(!responseBody) return null;
+    return responseBody;
+  })
+
+  return result;
+}
+
+export const getCommentListRequest = async (boardNumber : number|string) => {
+
+  const result = await fetch(GET_COMMENT_LIST_URL(boardNumber))
+  .then(async (response) => {
+    if(!response.ok) throw await response.json();
+    return response.json();
+  })
+  .then(response => {
+    const responseBody : GetCommentListResponseDto = response;
+    if(!responseBody) return null;
+    return responseBody;
+  })
+  .catch(error => {
+    const responseBody : ResponseDto = error;
+    if(!responseBody) return null;
+    return responseBody;
+  })
+
+  return result;
 }
 
 export const postBoardRequest = async (requestBody : PostBoardRequestDto, accessToken : string) => {
@@ -69,7 +136,65 @@ export const postBoardRequest = async (requestBody : PostBoardRequestDto, access
 
 }
 
-export const patchBoardRequest = async (requestBody : PatchBoardRequestDto, boardNumber : number , accessToken : string) => {
+export const postCommentRequest = async (requestBody : PostCommentRequestDto, boardNumber : number|string, accessToken : string) => {
+
+  const bearerToken = `Bearer ${accessToken}`;
+
+  const result = await fetch(POST_COMMENT_URL(boardNumber), {
+    method : 'POST',
+    headers : {
+      'Content-Type' : 'application/json',
+      'Authorization' : bearerToken,
+    },
+    body : JSON.stringify(requestBody)
+  })
+  .then(async (response) => {
+    if(!response.ok) throw await response.json();
+    return response.json();
+  })
+  .then(response => {
+    const responseBody : PostCommentResponseDto = response;
+    if(!responseBody) return null;
+    return responseBody;
+  })
+  .catch(error => {
+    const responseBody : ResponseDto = error;
+    if(!responseBody) return null;
+    return responseBody;
+  })
+
+  return result;
+}
+
+export const putFavoriteRequest = async (boardNumber : number|string, accessToken : string) => {
+
+  const bearerToken = `Bearer ${accessToken}`;
+
+  const result = await fetch(PUT_FAVORITE_URL(boardNumber), {
+    method : 'PUT',
+    headers : {
+      'Authorizaion' : bearerToken,
+    }
+  })
+  .then(async (response) => {
+    if(!response.ok) throw await response.json();
+    return response.json();
+  })
+  .then(response => {
+    const responseBody : PutFavoriteResponseDto = response;
+    if(!responseBody) return null;
+    return responseBody;
+  })
+  .catch(error => {
+    const responseBody : ResponseDto = error;
+    if(!responseBody) return null;
+    return responseBody;
+  })
+
+  return result;
+}
+
+export const patchBoardRequest = async (requestBody : PatchBoardRequestDto, boardNumber : number|string, accessToken : string) => {
 
   const bearerToken = `Bearer ${accessToken}`;
 

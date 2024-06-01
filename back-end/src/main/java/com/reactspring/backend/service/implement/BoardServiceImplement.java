@@ -71,18 +71,16 @@ public class BoardServiceImplement implements BoardService {
 
   @Override
   public ResponseEntity<? super GetBoardResponseDto> getBoard(Integer boardNumber) {
-
-    GetBoardResultSet resultSet = null;
-    List<ImageEntity> imageEntities = new ArrayList<>();
     
+    BoardListViewEntity boardListViewEntity = null;
+
     try {
       
-      resultSet = boardRepository.getBoard(boardNumber);
-      if(resultSet == null) return GetBoardResponseDto.noExistBoard();
-
-      imageEntities = imageRepository.findByBoardNumber(boardNumber);
-
       BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
+      if(boardEntity == null) return GetBoardResponseDto.noExistBoard();
+
+      boardListViewEntity = boardListViewRepository.findByBoardNumber(boardNumber);
+
       boardEntity.increaseViewCount();
       boardRepository.save(boardEntity);
 
@@ -91,7 +89,7 @@ public class BoardServiceImplement implements BoardService {
       return ResponseDto.internalError();
     }
 
-    return GetBoardResponseDto.success(resultSet, imageEntities);
+    return GetBoardResponseDto.success(boardListViewEntity);
 
   }
 

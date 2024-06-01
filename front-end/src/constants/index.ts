@@ -5,7 +5,7 @@ export const USER_PATH = () => '/user';
 export const BOARD_PATH = () => '/board';
 export const BOARD_WRITE_PATH = () => 'write';
 export const BOARD_UPDATE_PATH = () => 'update';
-
+export const BOARD_DETAIL_PATH = (boardNumber:string|number) => `detail/${boardNumber}`;
 export const PORT = '3300';
 export const DOMAIN = `http://localhost:${PORT}`;
 
@@ -23,9 +23,15 @@ export const GET_SIGN_IN_USER_URL = `${API_DOMAIN}/user`;
 
 // board api url
 export const GET_ALL_USER_BOARD_LIST_URL = `${API_DOMAIN}/board/all-user-board`;
+export const GET_BOARD_URL = (boardNumber : number|string) => `${API_DOMAIN}/board/${boardNumber}`;
+export const GET_FAVORITE_LIST_URL = (boardNumber : number|string) => `${API_DOMAIN}/board/${boardNumber}/favorite`;
+export const GET_COMMENT_LIST_URL = (boardNumber : number|string) => `${API_DOMAIN}/board/${boardNumber}/comment`;
 
 export const POST_BOARD_URL = `${API_DOMAIN}/board`;
+export const POST_COMMENT_URL = (boardNumber : number|string) => `${API_DOMAIN}/board/${boardNumber}/comment`;
 
-export const PATCH_BOARD_URL = (boardNumber : number) => `${API_DOMAIN}/board/${boardNumber}`;
+export const PUT_FAVORITE_URL = (boardNumber : number|string) => `${API_DOMAIN}/board/${boardNumber}/favorite`;
 
-export const DELETE_BOARD_URL = (boardNumber : number) => `${API_DOMAIN}/board/${boardNumber}`;
+export const PATCH_BOARD_URL = (boardNumber : number|string) => `${API_DOMAIN}/board/${boardNumber}`;
+
+export const DELETE_BOARD_URL = (boardNumber : number|string) => `${API_DOMAIN}/board/${boardNumber}`;

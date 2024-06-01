@@ -2,12 +2,11 @@ import { useEffect, useState } from 'react';
 import './style.css';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
-import { deleteBoardRequest, getAllUserBoarList } from '../../apis/board';
+import { deleteBoardRequest, getAllUserBoarListRequest } from '../../apis/board';
 import { BoardListItem } from '../../types/interface';
 import { ResponseDto } from '../../apis/response';
 import { DeleteBoardResponseDto, GetAllUserBoardListResponseDto } from '../../apis/response/board';
 import UserBoardListCard from '../../components/UserBoardListCard';
-import { USER_PATH } from '../../constants';
 
 
 export default function User() {
@@ -52,7 +51,7 @@ export default function User() {
       navigate('/');
     }
 
-    getAllUserBoarList(cookies.accessToken)
+    getAllUserBoarListRequest(cookies.accessToken)
     .then(getAllUserBoarListResponseHandler)
   }, [])
 

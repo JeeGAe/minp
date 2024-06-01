@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class FavoriteEntity {
   
   @Id
-  private String userEmmail;
+  private String userEmail;
   @Id
   private int boardNumber;
 

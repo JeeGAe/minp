@@ -10,6 +10,8 @@ import com.reactspring.backend.entity.BoardListViewEntity;
 @Repository
 public interface BoardListViewRepository extends JpaRepository<BoardListViewEntity, Integer> {
 
+  BoardListViewEntity findByBoardNumber(Integer boardNumber);
+
   List<BoardListViewEntity> findByWriterEmailOrderByWriteTimeDesc(String writerEmail);
   
 }

@@ -7,6 +7,7 @@ import com.reactspring.backend.dto.request.board.PatchBoardRequestDto;
 import com.reactspring.backend.dto.request.board.PostBoardRequestDto;
 import com.reactspring.backend.dto.request.board.PostCommentRequestDto;
 import com.reactspring.backend.dto.response.board.DeleteBoardResponseDto;
+import com.reactspring.backend.dto.response.board.GetBoardResponseDto;
 import com.reactspring.backend.dto.response.board.GetCommentListResponseDto;
 import com.reactspring.backend.dto.response.board.GetFavoriteListResponseDto;
 import com.reactspring.backend.dto.response.board.GetUserBoardListResponseDto;
@@ -49,16 +50,27 @@ public class BoardController {
     return response;
   }
 
+  @GetMapping("/{boardNumber}")
+  public ResponseEntity<? super GetBoardResponseDto> getBoard(
+    @PathVariable("boardNumber") Integer boardNumber) {
+      
+      ResponseEntity<? super GetBoardResponseDto> response = boardService.getBoard(boardNumber);
+      return response;
+  }
+  
+
   @GetMapping("/{boardNumber}/favorite")
   public ResponseEntity<? super GetFavoriteListResponseDto> getFavoriteList(
     @PathVariable("boardNumber") Integer boardNumber) {
+      
       ResponseEntity<? super GetFavoriteListResponseDto> response = boardService.getFavoriteList(boardNumber);
       return response;
   }
   
-  @GetMapping("/{boardNumber/comment}")
+  @GetMapping("/{boardNumber}/comment")
   public ResponseEntity<? super GetCommentListResponseDto> getCommentList(
     @PathVariable("boardNumber") Integer boardNumber) {
+      
       ResponseEntity<? super GetCommentListResponseDto> response = boardService.getCommentList(boardNumber);
       return response;
   }
