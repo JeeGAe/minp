@@ -16,11 +16,11 @@ import lombok.Getter;
 @Getter
 public class GetFavoriteListResponseDto extends ResponseDto{
 
-  private List<FavoriteListItem> favoriteListItems;
+  private List<FavoriteListItem> favoriteList;
 
   private GetFavoriteListResponseDto(List<GetFavoriteListResultSet> resultSets) {
     super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
-    this.favoriteListItems = FavoriteListItem.getList(resultSets);
+    this.favoriteList = FavoriteListItem.getList(resultSets);
   }
 
   public static ResponseEntity<GetFavoriteListResponseDto> success(List<GetFavoriteListResultSet> resultSets) {

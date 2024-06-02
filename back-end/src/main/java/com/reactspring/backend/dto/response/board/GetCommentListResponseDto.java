@@ -16,11 +16,11 @@ import lombok.Getter;
 @Getter
 public class GetCommentListResponseDto extends ResponseDto {
   
-  private List<CommentListItem> commentListItems;
+  private List<CommentListItem> commentList;
 
   private GetCommentListResponseDto(List<GetCommentListResultSet> resultSets) {
     super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
-    this.commentListItems = CommentListItem.getList(resultSets);
+    this.commentList = CommentListItem.getList(resultSets);
   }
 
   public static ResponseEntity<GetCommentListResponseDto> success(List<GetCommentListResultSet> resultSets) {
