@@ -173,7 +173,7 @@ export const putFavoriteRequest = async (boardNumber : number|string, accessToke
   const result = await fetch(PUT_FAVORITE_URL(boardNumber), {
     method : 'PUT',
     headers : {
-      'Authorizaion' : bearerToken,
+      'Authorization' : bearerToken,
     }
   })
   .then(async (response) => {

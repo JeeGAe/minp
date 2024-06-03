@@ -1,0 +1,29 @@
+#pagination-wrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.pagination-button {
+  cursor: pointer;
+}
+
+.pagination-button.inactive {
+  color: rgba(0, 0, 0, 0.3);
+  cursor: default;
+}
+
+.pagination-page-container {
+  display: flex;
+  gap: 15px;
+}
+
+.pagination-page {
+  counter-reset: rgba(0, 0, 0, .6);
+  cursor: pointer;
+}
+
+.pagination-currnet-page {
+  counter-reset: rgba(0, 0, 0, 1);
+  font-weight: 600;
+  cursor: default;
+}

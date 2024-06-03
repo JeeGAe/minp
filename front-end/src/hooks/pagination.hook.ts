@@ -16,21 +16,23 @@ const usePagination = <T>(viewNumber:number) => {
   const [viewSectionNumberList, setViewSectionNumberList] = useState<number[]>([]);
 
   const generateViewList = () => {
+
     const firstIndex = viewNumber * (currentPageNumber - 1);
     const lastIndex = viewNumber * currentPageNumber > totalList.length ? 
-    totalList.length : 
-    viewNumber * currentPageNumber;
+      totalList.length : 
+      viewNumber * currentPageNumber;
 
     const viewPageList = totalList.slice(firstIndex, lastIndex);
     setViewList(viewPageList);
   }
 
   const generateViewSection = () => {
+
     const countPerSection = 10;
     const firstIndex = countPerSection * (currentSectionNumber - 1);
     const lastIndex = countPerSection * currentSectionNumber > totalPageNumberList.length ? 
-    totalPageNumberList.length : 
-    countPerSection * currentSectionNumber;
+      totalPageNumberList.length : 
+      countPerSection * currentSectionNumber;
 
     const viewSectionNumberList = totalPageNumberList.slice(firstIndex, lastIndex);setViewSectionNumberList(viewSectionNumberList);
   }
@@ -58,7 +60,9 @@ const usePagination = <T>(viewNumber:number) => {
 
   useEffect(generateViewList, [currentPageNumber]);
 
-  useEffect(generateViewSection,[currentSectionNumber]);
+  useEffect(generateViewSection, [currentSectionNumber]);
+
+  useEffect(generateViewSection, [totalPageNumberList])
 
   return {
     setTotalList,
