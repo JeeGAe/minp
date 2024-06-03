@@ -165,7 +165,7 @@ export default function BoardWrite() {
         </div>
         {thumbnails.length !== 0 &&
         <div className='board-write-thumbnail-box'>
-          {thumbnails?.map((thumbnailUrl, index) => <ThumbnailCard key={thumbnailUrl} index={index} src={thumbnailUrl} onClick={onClickImageDeleteButtonHandler} />)}
+          {thumbnails?.map((thumbnailUrl, index) => <ThumbnailCard key={thumbnailUrl} index={index} src={thumbnailUrl} isCloseButton={true} onClickCloseButton={onClickImageDeleteButtonHandler} />)}
         </div>
         }
       </div>

@@ -5,24 +5,26 @@ interface Props {
   index : number;
   src : string
 
-  isButton? : boolean;
-  onClick? : (index:number) => void;
+  isCloseButton? : boolean;
+  onClickCloseButton? : (index:number) => void;
 }
 
 export default function ThumbnailCard(props:Props) {
   
   const { index, src } = props;
-  const { isButton, onClick } = props;
+  const { isCloseButton, onClickCloseButton } = props;
 
   const onClickHandler = () => {
-    if(!onClick) return ;
+    if(!onClickCloseButton) return ;
     
-    onClick(index);
+    onClickCloseButton(index);
   }
 
   return (
     <div className='thumbnail-card-container'>
-      <div onClick={onClickHandler}>{'X'}</div>
+      {isCloseButton &&
+        <div onClick={onClickHandler}>{'X'}</div>
+      }
       <img src={src} />
     </div>
   )

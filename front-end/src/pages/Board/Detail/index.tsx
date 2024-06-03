@@ -11,6 +11,7 @@ import Pagination from '../../../components/Pagination';
 import Button from '../../../components/Button';
 import { PostCommentRequestDto } from '../../../apis/request/board';
 import { selectUser } from '../../../store/user-slice.store';
+import ThumbnailCard from '../../../components/ThumbnailCard';
 
 export default function BoardDetail() {
 
@@ -181,33 +182,47 @@ export default function BoardDetail() {
   return (
     <div id='board-detail-wrapper'>
       <div className='board-detail-container'>
-        <div className='board-detail-title-container'>
-          <div className='board-detail-title-text'>{title}</div>
-          <div className='board-detail-proflie-box'>
-            <div className='board-detail-profile-image'></div>
-            <div className='board-detail-profile-nickname'>{writerNickname}</div>
+        <div className='board-detail-article-container'>
+          <div className='board-detail-title-box'>
+            <div className='board-detail-title-text'>{title}</div>
+            <div className='board-detail-proflie-box'>
+              <div className='board-detail-profile-image'></div>
+              <div className='board-detail-profile-nickname'>{writerNickname}</div>
+            </div>
+          </div>
+          <div className='board-detail-content-box'>{content}</div>
+          <div className='board-detail-image-box'>{boardImageList.map((url, index) => <ThumbnailCard key={url} index={index} src={url} />)}</div>
+        </div>
+        <div className='board-detail-divider'></div>
+        <div className='board-detail-favorite-box'>
+          {user.isLogin &&
+            <div className='board-detail-favorite-button' onClick={onClickFavoriteButtonHandler}>{favoriteList?.filter(item => item.email === user.email).length !== 0 ? `💖` : `🤍`}</div>
+          }
+          <div className='board-detail-favorite-list'>
+            {favoriteList?.map((item, index) => {if(index < 2) return <span className='board-detail-favorite-nickname' key={item.nickname}>{item.nickname}</span>})}
+            {favoriteList.length > 2 && '...'}
+            {favoriteList.length !== 0 && ' 님이 좋아요 중'}
           </div>
         </div>
-        <div className='board-detail-content-box'>{content}</div>
-        <div className='board-detail-image-box'>{boardImageList.map((url) => <img key={url} src={url}/>)}</div>
-      </div>
-      <div className='baord-detail-favorite-container'>
-        <div onClick={onClickFavoriteButtonHandler}>{favoriteList?.filter(item => item.email === user.email).length !== 0 ? `💖` : `❤`}</div>
-      </div>
-      <div className='board-detail-comment-container'>
-        {viewList.map((item) => <div key={item.content}>{item.content}</div>)}
-        <Pagination 
-          currentPageNumber={currentPageNumber} 
-          setCurrentPageNumber={setCurrentPageNumber} 
-          currentSectionNumber={currentSectionNumber} 
-          setCurrentSectionNumber={setCurrentSectionNumber} viewSectionNumberList={viewSectionNumberList} 
-          lastSectionNumber={lastSectionNumber} />
-        {user.isLogin &&
-          <div className='board-detail-comment-write-box'>
-            <input type='text' value={comment} onChange={onChageCommentInputHandler}/>
-            <Button text={'댓글 작성'} onClick={onClickCommentWriteButtonHandler}/>
+
+        <div className='board-detail-comment-box'>
+          {viewList.map((item) => <div key={item.content}>{item.content}</div>)}
+          <div className='board-detail-comment-pagination-box'>
+            <Pagination 
+              currentPageNumber={currentPageNumber} 
+              setCurrentPageNumber={setCurrentPageNumber} 
+              currentSectionNumber={currentSectionNumber} 
+              setCurrentSectionNumber={setCurrentSectionNumber} viewSectionNumberList={viewSectionNumberList} 
+              lastSectionNumber={lastSectionNumber} />
           </div>
-        }
+          
+          {user.isLogin &&
+            <div className='board-detail-comment-write-box'>
+              <input className='board-detail-comment-input' type='text' value={comment} onChange={onChageCommentInputHandler}/>
+              <Button text={'댓글 작성'} onClick={onClickCommentWriteButtonHandler}/>
+            </div>
+          }
+        </div>
       </div>
     </div>
   )

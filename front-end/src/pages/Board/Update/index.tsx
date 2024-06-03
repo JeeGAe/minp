@@ -193,7 +193,7 @@ export default function BoardUpdate() {
           </div>
           {thumbnails.length !== 0 &&
           <div className='board-update-thumbnail-box'>
-            {thumbnails?.map((thumbnailUrl, index) => <ThumbnailCard key={thumbnailUrl} index={index} src={thumbnailUrl} onClick={onClickImageDeleteButtonHandler} />)}
+            {thumbnails?.map((thumbnailUrl, index) => <ThumbnailCard key={thumbnailUrl} index={index} src={thumbnailUrl} isCloseButton={true} onClickCloseButton={onClickImageDeleteButtonHandler} />)}
           </div>
           }
         </div>
