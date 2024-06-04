@@ -10,6 +10,10 @@
   padding-top: 30px;
 }
 
+.board-detail-article-container {
+  padding-bottom: 10px;
+}
+
 .board-detail-title-box {
   display: flex;
   justify-content: space-between;

@@ -14,6 +14,7 @@ import com.reactspring.backend.dto.response.board.DeleteBoardResponseDto;
 import com.reactspring.backend.dto.response.board.GetBoardResponseDto;
 import com.reactspring.backend.dto.response.board.GetCommentListResponseDto;
 import com.reactspring.backend.dto.response.board.GetFavoriteListResponseDto;
+import com.reactspring.backend.dto.response.board.GetLatest3BoardResponseDto;
 import com.reactspring.backend.dto.response.board.GetUserBoardListResponseDto;
 import com.reactspring.backend.dto.response.board.PatchBoardResponseDto;
 import com.reactspring.backend.dto.response.board.PostBoardResponseDto;
@@ -133,6 +134,22 @@ public class BoardServiceImplement implements BoardService {
     return GetCommentListResponseDto.success(resultSets);
   }
 
+  @Override
+  public ResponseEntity<? super GetLatest3BoardResponseDto> getLatest3Board() {
+
+    List<BoardListViewEntity> boardListViewEntities = new ArrayList<>();
+
+    try {
+
+      boardListViewEntities = boardListViewRepository.findTop3ByOrderByWriteTimeDesc();
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseDto.internalError();
+    }
+
+    return GetLatest3BoardResponseDto.success(boardListViewEntities);
+  }
 
 
   @Override

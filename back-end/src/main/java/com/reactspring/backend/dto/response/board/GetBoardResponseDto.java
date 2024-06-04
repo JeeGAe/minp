@@ -9,11 +9,8 @@ import org.springframework.http.ResponseEntity;
 
 import com.reactspring.backend.common.ResponseCode;
 import com.reactspring.backend.common.ResponseMessage;
-import com.reactspring.backend.dto.object.BoardListItem;
 import com.reactspring.backend.dto.response.ResponseDto;
 import com.reactspring.backend.entity.BoardListViewEntity;
-import com.reactspring.backend.entity.ImageEntity;
-import com.reactspring.backend.repository.resultSet.GetBoardResultSet;
 
 import lombok.Getter;
 

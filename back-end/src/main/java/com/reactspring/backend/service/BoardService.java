@@ -9,6 +9,7 @@ import com.reactspring.backend.dto.response.board.DeleteBoardResponseDto;
 import com.reactspring.backend.dto.response.board.GetBoardResponseDto;
 import com.reactspring.backend.dto.response.board.GetCommentListResponseDto;
 import com.reactspring.backend.dto.response.board.GetFavoriteListResponseDto;
+import com.reactspring.backend.dto.response.board.GetLatest3BoardResponseDto;
 import com.reactspring.backend.dto.response.board.GetUserBoardListResponseDto;
 import com.reactspring.backend.dto.response.board.PatchBoardResponseDto;
 import com.reactspring.backend.dto.response.board.PostBoardResponseDto;
@@ -21,6 +22,7 @@ public interface BoardService {
   ResponseEntity<? super GetBoardResponseDto> getBoard(Integer boardNumber);
   ResponseEntity<? super GetFavoriteListResponseDto> getFavoriteList(Integer boardNumber);
   ResponseEntity<? super GetCommentListResponseDto> getCommentList(Integer boardNumber);
+  ResponseEntity<? super GetLatest3BoardResponseDto> getLatest3Board();
   
   ResponseEntity<? super PostBoardResponseDto> postBoard(PostBoardRequestDto dto, String email);
   ResponseEntity<? super PostCommentResponseDto> postComment(PostCommentRequestDto dto, Integer boardNumber, String email);

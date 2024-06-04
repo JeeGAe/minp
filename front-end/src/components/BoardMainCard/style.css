@@ -1,0 +1,31 @@
+.board-main-card {
+  width: 500px;
+  height: 600px;
+
+  background: linear-gradient(rgba(0, 0, 0, .4), rgba(0, 0, 0, .4));
+  background-size: 100% 100%;
+  background-color: rgba(105, 0, 255, 1);
+  
+  color: antiquewhite;
+  border-radius: 10px 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  gap: 15px;
+}
+
+.board-main-card-title-text {
+  padding-left: 5px;
+  font-size: 28px;
+
+  cursor: pointer;
+}
+
+.board-main-card-engagement {
+  padding-top: 20px;
+  padding-bottom: 200px;
+  padding-left: 5px;
+
+  font-size: 14px;
+}

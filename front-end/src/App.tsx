@@ -12,13 +12,14 @@ import User from './pages/User';
 import { BOARD_DETAIL_PATH, BOARD_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, MAIN_PATH, SIGN_IN_PATH, SIGN_UP_PATH, USER_PATH } from './constants';
 import BoardUpdate from './pages/Board/Update';
 import BoardDetail from './pages/Board/Detail';
+import Main from './pages/Main';
 
 
 function App() {
   return (
       <Routes>
         <Route element={<Container />}>
-          <Route path={MAIN_PATH()} />
+          <Route path={MAIN_PATH()} element={<Main />}/>
           <Route path={SIGN_UP_PATH()} element={<SignUp />} />
           <Route path={SIGN_IN_PATH()} element={<SignIn />} />
           <Route path={USER_PATH()} element={<User />}/>

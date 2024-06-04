@@ -2,6 +2,7 @@ import GetAllUserBoardListResponseDto from './getAllUserBoardList.response.dto';
 import GetBoardResponseDto from './getBoard.response.dto';
 import GetFavoriteListResponseDto from './getFavoriteList.reponse.dto';
 import GetCommentListResponseDto from './getCommentList.response.dto';
+import GetLatest3BoardResponseDto from './getLatest3Board.response.dto';
 import PostBoardResponseDto from './postBoard.response.dto';
 import PostCommentResponseDto from './postComment.response.dto';
 import PutFavoriteResponseDto from './putFavorite.reponse.dto';
@@ -13,6 +14,7 @@ export type {
   GetBoardResponseDto,
   GetFavoriteListResponseDto,
   GetCommentListResponseDto,
+  GetLatest3BoardResponseDto,
   PostBoardResponseDto,
   PostCommentResponseDto,
   PutFavoriteResponseDto,

@@ -1,0 +1,13 @@
+#comment-list-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.comment-list-card-box {
+  display: flex;
+}
+
+.comment-list-card-nickname {
+  min-width: 100px;
+}

@@ -13,5 +13,7 @@ public interface BoardListViewRepository extends JpaRepository<BoardListViewEnti
   BoardListViewEntity findByBoardNumber(Integer boardNumber);
 
   List<BoardListViewEntity> findByWriterEmailOrderByWriteTimeDesc(String writerEmail);
+
+  List<BoardListViewEntity> findTop3ByOrderByWriteTimeDesc();
   
 }

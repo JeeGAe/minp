@@ -10,11 +10,13 @@ import com.reactspring.backend.dto.response.board.DeleteBoardResponseDto;
 import com.reactspring.backend.dto.response.board.GetBoardResponseDto;
 import com.reactspring.backend.dto.response.board.GetCommentListResponseDto;
 import com.reactspring.backend.dto.response.board.GetFavoriteListResponseDto;
+import com.reactspring.backend.dto.response.board.GetLatest3BoardResponseDto;
 import com.reactspring.backend.dto.response.board.GetUserBoardListResponseDto;
 import com.reactspring.backend.dto.response.board.PatchBoardResponseDto;
 import com.reactspring.backend.dto.response.board.PostBoardResponseDto;
 import com.reactspring.backend.dto.response.board.PostCommentResponseDto;
 import com.reactspring.backend.dto.response.board.PutFavoriteResponseDto;
+import com.reactspring.backend.entity.BoardEntity;
 import com.reactspring.backend.service.BoardService;
 
 import jakarta.validation.Valid;
@@ -74,6 +76,13 @@ public class BoardController {
       ResponseEntity<? super GetCommentListResponseDto> response = boardService.getCommentList(boardNumber);
       return response;
   }
+
+  @GetMapping("/latest-3-board")
+  public ResponseEntity<? super GetLatest3BoardResponseDto> getLatest3Board() {
+      ResponseEntity<? super GetLatest3BoardResponseDto> response = boardService.getLatest3Board();
+      return response;
+  }
+  
   
 
   @PostMapping("")

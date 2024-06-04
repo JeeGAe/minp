@@ -12,6 +12,7 @@ import Button from '../../../components/Button';
 import { PostCommentRequestDto } from '../../../apis/request/board';
 import { selectUser } from '../../../store/user-slice.store';
 import ThumbnailCard from '../../../components/ThumbnailCard';
+import CommentListCard from '../../../components/CommentListCard';
 
 export default function BoardDetail() {
 
@@ -29,7 +30,7 @@ export default function BoardDetail() {
 
   const user : UserInfo = useAppSelector(selectUser);
 
-  const { setTotalList, viewList, currentPageNumber, setCurrentPageNumber, currentSectionNumber, lastSectionNumber, setCurrentSectionNumber, viewSectionNumberList } = usePagination<CommentListItem>(3);
+  const { setTotalList, viewList, currentPageNumber, setCurrentPageNumber, currentSectionNumber, lastSectionNumber, setCurrentSectionNumber, viewSectionNumberList } = usePagination<CommentListItem>(5);
 
   // api response 함수
   const getBoardResponseHandler = (responseBody : GetBoardResponseDto|ResponseDto|null) => {
@@ -206,15 +207,19 @@ export default function BoardDetail() {
         </div>
 
         <div className='board-detail-comment-box'>
-          {viewList.map((item) => <div key={item.content}>{item.content}</div>)}
-          <div className='board-detail-comment-pagination-box'>
-            <Pagination 
-              currentPageNumber={currentPageNumber} 
-              setCurrentPageNumber={setCurrentPageNumber} 
-              currentSectionNumber={currentSectionNumber} 
-              setCurrentSectionNumber={setCurrentSectionNumber} viewSectionNumberList={viewSectionNumberList} 
-              lastSectionNumber={lastSectionNumber} />
-          </div>
+          {viewList.length !== 0 &&
+          <>
+            <CommentListCard commentList={viewList}/>
+            <div className='board-detail-comment-pagination-box'>
+              <Pagination 
+                currentPageNumber={currentPageNumber} 
+                setCurrentPageNumber={setCurrentPageNumber} 
+                currentSectionNumber={currentSectionNumber} 
+                setCurrentSectionNumber={setCurrentSectionNumber} viewSectionNumberList={viewSectionNumberList} 
+                lastSectionNumber={lastSectionNumber} />
+            </div>
+          </>
+          }
           
           {user.isLogin &&
             <div className='board-detail-comment-write-box'>

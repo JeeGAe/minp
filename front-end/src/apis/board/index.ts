@@ -1,7 +1,7 @@
-import { DELETE_BOARD_URL, GET_ALL_USER_BOARD_LIST_URL, GET_BOARD_URL, GET_COMMENT_LIST_URL, GET_FAVORITE_LIST_URL, PATCH_BOARD_URL, POST_BOARD_URL, POST_COMMENT_URL, PUT_FAVORITE_URL } from "../../constants"
+import { DELETE_BOARD_URL, GET_ALL_USER_BOARD_LIST_URL, GET_BOARD_URL, GET_COMMENT_LIST_URL, GET_FAVORITE_LIST_URL, GET_LATEST_3_BOARD_LIST_URL, PATCH_BOARD_URL, POST_BOARD_URL, POST_COMMENT_URL, PUT_FAVORITE_URL } from "../../constants"
 import { PatchBoardRequestDto, PostBoardRequestDto, PostCommentRequestDto } from "../request/board"
 import { ResponseDto } from "../response";
-import { DeleteBoardResponseDto, GetBoardResponseDto, GetCommentListResponseDto, GetFavoriteListResponseDto, PatchBoardResponseDto, PostCommentResponseDto, PutFavoriteResponseDto } from "../response/board";
+import { DeleteBoardResponseDto, GetBoardResponseDto, GetCommentListResponseDto, GetFavoriteListResponseDto, GetLatest3BoardResponseDto, PatchBoardResponseDto, PostCommentResponseDto, PutFavoriteResponseDto } from "../response/board";
 import getAllUserBoarListResponseDto from "../response/board/getAllUserBoardList.response.dto";
 import PostBoardResponseDto from "../response/board/postBoard.response.dto";
 
@@ -91,6 +91,27 @@ export const getCommentListRequest = async (boardNumber : number|string) => {
   })
   .then(response => {
     const responseBody : GetCommentListResponseDto = response;
+    if(!responseBody) return null;
+    return responseBody;
+  })
+  .catch(error => {
+    const responseBody : ResponseDto = error;
+    if(!responseBody) return null;
+    return responseBody;
+  })
+
+  return result;
+}
+
+export const getLatest3BoardRequest = async () => {
+
+  const result = await fetch(GET_LATEST_3_BOARD_LIST_URL)
+  .then(async (response) => {
+    if(!response.ok) throw await response.json();
+    return response.json();
+  })
+  .then(response => {
+    const responseBody : GetLatest3BoardResponseDto = response;
     if(!responseBody) return null;
     return responseBody;
   })
