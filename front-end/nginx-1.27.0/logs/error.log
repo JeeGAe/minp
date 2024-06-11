@@ -1,0 +1,41 @@
+2024/06/10 11:59:14 [emerg] 25188#16064: invalid number of arguments in "include" directive in C:\Users\dream\dev\react-spring\front-end\nginx-1.27.0/conf/nginx.conf:20
+2024/06/10 12:00:42 [emerg] 20716#20712: invalid number of arguments in "include" directive in C:\Users\dream\dev\react-spring\front-end\nginx-1.27.0/conf/nginx.conf:20
+2024/06/10 12:02:49 [error] 17932#24852: *1 CreateFile() "C:\Users\dream\dev\react-spring\front-end\nginx-1.27.0/html/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost", referrer: "http://localhost/"
+2024/06/10 12:03:27 [notice] 24704#21020: signal process started
+2024/06/10 12:07:00 [notice] 20812#11092: signal process started
+2024/06/10 12:11:16 [notice] 20356#15052: signal process started
+2024/06/10 12:17:16 [notice] 9944#19044: signal process started
+2024/06/10 12:17:42 [notice] 19376#10856: signal process started
+2024/06/10 12:22:07 [notice] 2928#15076: signal process started
+2024/06/10 12:23:13 [notice] 24924#23240: signal process started
+2024/06/10 12:23:36 [notice] 24768#1348: signal process started
+2024/06/10 12:23:36 [error] 24768#1348: invalid PID number "" in "C:\Users\dream\dev\react-spring\front-end\nginx-1.27.0/logs/nginx.pid"
+2024/06/10 12:23:55 [notice] 11288#8560: signal process started
+2024/06/10 12:28:18 [notice] 26332#8884: signal process started
+2024/06/10 12:28:45 [notice] 23092#14768: signal process started
+2024/06/10 12:28:45 [error] 23092#14768: invalid PID number "" in "C:\Users\dream\dev\react-spring\front-end\nginx-1.27.0/logs/nginx.pid"
+2024/06/10 12:32:10 [notice] 24664#26272: signal process started
+2024/06/10 12:32:22 [notice] 21820#22104: signal process started
+2024/06/10 12:33:16 [notice] 9488#25672: signal process started
+2024/06/10 12:33:27 [error] 26000#3772: *1 rewrite or internal redirection cycle while internally redirecting to "/index.html", client: 127.0.0.1, server: localhost, request: "GET / HTTP/1.1", host: "localhost"
+2024/06/10 12:36:41 [notice] 24328#25624: signal process started
+2024/06/10 12:40:28 [emerg] 23380#25020: CreateFile() "./sites-enabled/front-end.conf" failed (3: The system cannot find the path specified) in C:\Users\dream\dev\react-spring\front-end\nginx-1.27.0/conf/nginx.conf:35
+2024/06/10 12:40:42 [emerg] 3088#25664: CreateFile() "./sites-enabled/front-end.conf" failed (3: The system cannot find the path specified) in C:\Users\dream\dev\react-spring\front-end\nginx-1.27.0/conf/nginx.conf:35
+2024/06/10 12:40:59 [emerg] 16032#21008: CreateFile() "./sites-enabled/front-end.conf" failed (3: The system cannot find the path specified) in C:\Users\dream\dev\react-spring\front-end\nginx-1.27.0/conf/nginx.conf:35
+2024/06/10 12:41:35 [notice] 23624#20496: signal process started
+2024/06/10 12:42:31 [notice] 23212#22548: signal process started
+2024/06/10 12:42:48 [notice] 5980#21020: signal process started
+2024/06/10 12:43:18 [emerg] 17252#22508: CreateFile() "./sites-enabled/front-end.conf" failed (3: The system cannot find the path specified) in C:\Users\dream\dev\react-spring\front-end\nginx-1.27.0/conf/nginx.conf:35
+2024/06/10 12:43:30 [notice] 16836#19544: signal process started
+2024/06/10 12:43:38 [notice] 24748#108: signal process started
+2024/06/10 12:43:54 [emerg] 1620#1796: CreateFile() "./sites-enabled/front-end.conf" failed (3: The system cannot find the path specified) in C:\Users\dream\dev\react-spring\front-end\nginx-1.27.0/conf/nginx.conf:35
+2024/06/10 12:44:54 [notice] 20260#17812: signal process started
+2024/06/10 12:45:17 [emerg] 23412#11520: CreateFile() "C:\Users\dream\dev\react-spring\front-end\nginx-1.27.0/conf/../sites-enabled/front-end.conf" failed (3: The system cannot find the path specified) in C:\Users\dream\dev\react-spring\front-end\nginx-1.27.0/conf/nginx.conf:35
+2024/06/10 12:53:58 [emerg] 20172#20960: CreateFile() "C:\Users\dream\dev\react-spring\front-end\nginx-1.27.0/conf/sites-enabled/front-end.conf" failed (3: The system cannot find the path specified) in C:\Users\dream\dev\react-spring\front-end\nginx-1.27.0/conf/nginx.conf:35
+2024/06/10 12:54:16 [notice] 24436#21680: signal process started
+2024/06/10 12:54:30 [emerg] 108#18728: CreateFile() "C:\Users\dream\dev\react-spring\front-end\nginx-1.27.0/conf/sites-enabled/front-end.conf" failed (3: The system cannot find the path specified) in C:\Users\dream\dev\react-spring\front-end\nginx-1.27.0/conf/nginx.conf:35
+2024/06/10 12:56:07 [notice] 25260#22672: signal process started
+2024/06/10 12:57:07 [notice] 25528#15680: signal process started
+2024/06/10 12:57:29 [notice] 26516#11028: signal process started
+2024/06/10 12:58:51 [notice] 5260#23904: signal process started
+2024/06/10 14:53:17 [notice] 24760#9396: signal process started

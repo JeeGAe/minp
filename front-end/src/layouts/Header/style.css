@@ -7,6 +7,10 @@
   height: 55px;
 }
 
+.logo-container {
+  cursor: pointer;
+}
+
 .logo-text {
   padding-left: 20px;
 

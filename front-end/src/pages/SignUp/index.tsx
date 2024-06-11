@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { ChangeEvent, KeyboardEvent, useEffect, useState } from 'react';
 import './style.css';
 
 // 컴포넌트
@@ -11,6 +11,11 @@ import { SignUpRequestDto } from '../../apis/request/auth';
 import { signUpRequest } from '../../apis/auth';
 import { SignUpResponseDto } from '../../apis/response/auth';
 import { ResponseDto } from '../../apis/response';
+import { useNavigate } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
+import { UserInfo } from '../../types/interface';
+import { useAppSelector } from '../../hooks';
+import { selectUser } from '../../store/user-slice.store';
 
 export default function SignUp() {
 
@@ -39,6 +44,12 @@ export default function SignUp() {
   // const [phoneNumberErrorMessage, setPhoneNumberErrorMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
+  const navigate = useNavigate();
+
+  const [cookies, setCookies] = useCookies(['accessToken']);
+
+  const user : UserInfo = useAppSelector(selectUser);
+
   // 에러 상태 초기화 함수
   const errorInitialize = () => {
     setEmailError(false);
@@ -64,6 +75,81 @@ export default function SignUp() {
     setZipCode(zonecode);
     setAddress(address);
   }
+
+  // event 함수
+
+  const onChangeEmailInputHandler = (event:ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setEmail(value);
+  }
+
+  const onChangePasswordInputHandler = (event:ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setPassword(value);
+  }
+
+  const onChangePasswordCheckInputHandler = (event:ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setPasswordCheck(value);
+  }
+
+  const onChangeNicknameCheckInputHandler = (event:ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setNickname(value);
+  }
+
+  const onChangePhoneNumberCheckInputHandler = (event:ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setPhoneNumber(value);
+  }
+
+  const onChangeAddressDetailCheckInputHandler = (event:ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setAddressDetail(value);
+  }
+
+  const onKeyDownPhoneNumberInputHandler = (event:KeyboardEvent<HTMLInputElement>) => {
+    if(event.key !== 'Enter' && event.key !== 'Tab') return ;
+    openUseDaumPostcodePopup({ top : 200, left : 500, onComplete : onCompleteDaumPostcodePopupHandler });
+  }
+
+  const onClickSignUpButtonHandler = () => {
+    // 에러 관련 초기화
+    errorInitialize();
+    const emailRegex = new RegExp('[A-Za-z0-9]+@[a-z]+\.[a-z]{2,3}');
+    const passwordRegex = new RegExp('^(?=.*[a-zA-Z])(?=.*\\d)[A-Za-z\\d!@#$%^&*_]{8,20}$');
+    const nicknameRegex = new RegExp('[a-zA-z\d가-힣]{3,10}');
+
+    if(email.trim() === '' || email.includes(' ') || !emailRegex.test(email)) {
+      setEmailError(true);
+      setErrorMessage('이메일을 형식에 맞게 적어주십시오!');
+      return ;
+    }
+    if(password.trim() === '' || password.includes(' ') || !passwordRegex.test(password)) {
+      setPasswordError(true);
+      setErrorMessage('비밀번호를 8자리 이상 20자리 이하로 만들어주세요!(허용특수문자:!@#$%^&*_)');
+      return ;
+    }
+    if(password.trim() !== passwordCheck.trim()) {
+      setPasswordCheckError(true);
+      setErrorMessage('비밀번호가 일치하지 않습니다.');
+      return ;
+    }
+    if(nickname.trim() === '' || nickname.includes(' ') || !nicknameRegex.test(nickname)) {
+      setNicknameError(true);
+      setErrorMessage('닉네임을 3자리이상 10자리 이하로 적어주십시오!(특수문자X)');
+      return ;
+    }
+
+    const requestBody : SignUpRequestDto = { email, password, nickname,
+       phoneNumber, zipCode, address, addressDetail };
+    
+    signUpRequest(requestBody)
+    .then(signUpResponseHandler)
+
+  }
+
+  // api response 함수
 
   const signUpResponseHandler = (responseBody : SignUpResponseDto | ResponseDto | null) => {
     if(!responseBody) {
@@ -95,41 +181,20 @@ export default function SignUp() {
       alert('서버에 문제가 있습니다.');
       return ;
     }
+    if(code === 'SU') {
+      alert("가입되었습니다!");
+      navigate("/");
+    }
 
   }
 
-  const onClickSignUpButtonHandler = () => {
-    // 에러 관련 초기화
-    errorInitialize();
-
-    if(email.trim() === '') {
-      setEmailError(true);
-      setErrorMessage('이메일을 형식에 맞게 적어주십시오!');
-      return ;
+  // effect
+  useEffect(() => {
+    if(cookies.accessToken || user.isLogin) {
+      alert("비정상적인 접근입니다.");
+      navigate('/');
     }
-    if(password.trim() === '') {
-      setPasswordError(true);
-      setErrorMessage('비밀번호를 형식에 맞게 적어주십시오!');
-      return ;
-    }
-    if(password.trim() !== passwordCheck.trim()) {
-      setPasswordCheckError(true);
-      setErrorMessage('비밀번호가 일치하지 않습니다.');
-      return ;
-    }
-    if(nickname.trim() === '') {
-      setNicknameError(true);
-      setErrorMessage('닉네임을 형식에 맞게 적어주십시오!');
-      return ;
-    }
-
-    const requestBody : SignUpRequestDto = { email, password, nickname,
-       phoneNumber, zipCode, address, addressDetail };
-    
-    signUpRequest(requestBody)
-    .then(signUpResponseHandler)
-
-  }
+  }, []);
 
   // 렌더링 
   return (
@@ -146,7 +211,7 @@ export default function SignUp() {
             placeholder='이메일을 입력하세요.' 
             type='text' 
             value={email} 
-            setValue={setEmail} 
+            onChange={onChangeEmailInputHandler} 
             error={isEmailError} 
             message={errorMessage} 
           />
@@ -155,7 +220,7 @@ export default function SignUp() {
             placeholder='비밀번호를 입력하세요.' 
             type='text' 
             value={password} 
-            setValue={setPassword} 
+            onChange={onChangePasswordInputHandler} 
             error={isPasswordError} 
             message={errorMessage} 
           />
@@ -164,7 +229,7 @@ export default function SignUp() {
             placeholder='비밀번호를 입력하세요.' 
             type='text' 
             value={passwordCheck} 
-            setValue={setPasswordCheck} 
+            onChange={onChangePasswordCheckInputHandler} 
             error={isPasswordCheckError} 
             message={errorMessage} 
           />
@@ -173,7 +238,7 @@ export default function SignUp() {
             placeholder='닉네임을 입력하세요.' 
             type='text' 
             value={nickname} 
-            setValue={setNickname} 
+            onChange={onChangeNicknameCheckInputHandler} 
             error={isNicknameError} 
             message={errorMessage} 
           />
@@ -181,7 +246,8 @@ export default function SignUp() {
             label='연락처' 
             placeholder='연락처를 입력하세요.' 
             type='text' value={phoneNumber} 
-            setValue={setPhoneNumber} 
+            onChange={onChangePhoneNumberCheckInputHandler} 
+            onKeyDown={onKeyDownPhoneNumberInputHandler}
             error={isPhoneNumberError} 
             message={errorMessage} 
           />
@@ -190,7 +256,6 @@ export default function SignUp() {
             placeholder='우편번호를 입력하세요.' 
             type='text' 
             value={zipCode} 
-            setValue={setZipCode} 
             readOnly={true} 
             onClick={onClickAddressInputHandler} 
           />
@@ -199,7 +264,6 @@ export default function SignUp() {
             placeholder='주소를 입력하세요.' 
             type='text' 
             value={address} 
-            setValue={setAddress} 
             readOnly={true} 
             onClick={onClickAddressInputHandler} 
           />
@@ -208,7 +272,7 @@ export default function SignUp() {
             placeholder='상세주소를 입력하세요.' 
             type='text' 
             value={addressDetail} 
-            setValue={setAddressDetail} 
+            onChange={onChangeAddressDetailCheckInputHandler} 
           />
           <div className='sign-up-button-box'>
             <Button text='회원가입' size='wide' onClick={onClickSignUpButtonHandler}/>

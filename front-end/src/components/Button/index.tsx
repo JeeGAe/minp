@@ -1,24 +1,27 @@
 
+import { forwardRef } from 'react';
 import './style.css';
 
 interface Props {
   text : string;
   size? : 'wide';
 
+  color? : 'negative';
+
   onClick? : () => void;
 }
 
-const Button = (props:Props) => {
+const Button = forwardRef<HTMLDivElement, Props>((props:Props, ref) => {
 
   // properties
-  const { text, size } = props;
+  const { text, size, color } = props;
   const { onClick } = props;
 
   return (
-    <div className={`button ${size ? size : ''}`} onClick={onClick}>
+    <div ref={ref} className={`button ${size ? size : ''} ${color ? color : ''}`} onClick={onClick}>
       {text}
     </div>
   )
-}
+})
 
 export default Button;

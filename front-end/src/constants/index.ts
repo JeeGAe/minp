@@ -7,7 +7,13 @@ export const BOARD_WRITE_PATH = () => 'write';
 export const BOARD_UPDATE_PATH = () => 'update';
 export const BOARD_DETAIL_PATH = (boardNumber:string|number) => `detail/${boardNumber}`;
 export const PORT = '3300';
-export const DOMAIN = `http://localhost:${PORT}`;
+
+const apiUrl = (process.env.REACT_APP_API_URL as string);
+if (!apiUrl) {
+  throw new Error('REACT_APP_API_URL 환경 변수가 정의되지 않았습니다.');
+}
+
+export const DOMAIN = `http://${apiUrl}:${PORT}`;
 
 export const API_DOMAIN = `${DOMAIN}/api`;
 

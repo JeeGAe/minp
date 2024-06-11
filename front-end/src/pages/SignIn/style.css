@@ -1,4 +1,6 @@
 #sign-in-wrapper{
+  height: 500px;
+
   background-color: rgba(238, 238, 238, 1);
   padding: 100px 0px;
 
@@ -19,4 +21,16 @@
 
 .sign-in-context-text{
   font-size: 80px;
+}
+
+.sign-in-button {
+  padding-top: 10px;
+}
+
+.sign-in-sign-up-box {
+  padding-top: 20px;
+}
+
+.sign-in-sign-up-text {
+  padding-bottom: 8px;
 }

@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { UserInfo } from '../../types/interface';
-import { SIGN_IN_PATH } from '../../constants';
+import { SIGN_IN_PATH, USER_PATH } from '../../constants';
 
 
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hook';
@@ -24,9 +24,13 @@ export default function Header() {
   const dispatch = useAppDispatch();
 
   // 쿠키 상태
-  const [cookies, setCookies] = useCookies(['accessToken']);
+  const [cookies, setCookies, removeCookies] = useCookies(['accessToken']);
 
   const navigate = useNavigate();
+
+
+
+  // response 함수
 
   const getSignInResponseHandler = (responseBody : GetSignInUserResponseDto | ResponseDto | null) => {
     if(!responseBody) { 
@@ -44,7 +48,7 @@ export default function Header() {
       return ;
     }
     if(code === 'AF') {
-      alert("권한이 없습니다.");
+      removeCookies('accessToken');
       return ;
     }
     if(code === 'SU' && 'email' in responseBody) {
@@ -60,6 +64,8 @@ export default function Header() {
     
   }
 
+  // effect
+
   useEffect(() => {
     if(!cookies.accessToken) {
       dispatch(signOut());
@@ -71,15 +77,15 @@ export default function Header() {
   
   return (
     <div id='header'>
-      <div className='logo-container'>
+      <div className='logo-container' onClick={() => navigate('/')}>
         <div className='logo-text'>{'minP'}</div>
       </div>
       <div className='right-side-container'>
         <div className='search-box'></div>
         <div className='user-status-box'>
           {!user.isLogin ?
-            <Button text={'Sign-in'} onClick={() => navigate(SIGN_IN_PATH())}/> : 
-            <div onClick={() => navigate('/user')}>{user.nickname}</div>
+            <Button text={'SIGN IN'} onClick={() => navigate(SIGN_IN_PATH())}/> : 
+            <div onClick={() => navigate(USER_PATH())}>{user.nickname}</div>
           }
         </div>
       </div>

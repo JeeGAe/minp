@@ -175,28 +175,26 @@ export default function BoardUpdate() {
   }
 
   return (
-    <div>
-      <div id='board-update-wrapper'>
-        <div className='board-update-container'>
-          <div className='board-update-upload-button-box'>
+    <div id='board-update-wrapper'>
+      <div className='board-update-container'>
+        <div className='board-update-upload-button-box'>
           <Button text={'업로드'} onClick={onClickUploadButtonHandler}/>
-          </div>
-          <div className='board-update-title-box'>
-            <textarea ref={titleInputRef} rows={1} value={title} onChange={onChangeTitleHandler} placeholder='제목을 입력하세요.'/>
-          </div>
-          <div className='board-update-content-box'>
-            <textarea ref={contentInputRef} value={content} onChange={onChangeContentHandler} placeholder='내용을 입력하세요.' />
-          </div>
-          <div className='board-update-add-image-button-box'>
-            <input ref={imageInputRef} type='file' multiple onChange={onChangeImageHandler}/>
-            <Button text={'이미지 추가'} onClick={onClickAddImageButtonHandler}/>
-          </div>
-          {thumbnails.length !== 0 &&
-          <div className='board-update-thumbnail-box'>
-            {thumbnails?.map((thumbnailUrl, index) => <ThumbnailCard key={thumbnailUrl} index={index} src={thumbnailUrl} isCloseButton={true} onClickCloseButton={onClickImageDeleteButtonHandler} />)}
-          </div>
-          }
         </div>
+        <div className='board-update-title-box'>
+          <textarea ref={titleInputRef} rows={1} value={title} onChange={onChangeTitleHandler} placeholder='제목을 입력하세요.'/>
+        </div>
+        <div className='board-update-content-box'>
+          <textarea ref={contentInputRef} value={content} onChange={onChangeContentHandler} placeholder='내용을 입력하세요.' />
+        </div>
+        <div className='board-update-add-image-button-box'>
+          <input ref={imageInputRef} type='file' multiple onChange={onChangeImageHandler}/>
+          <Button text={'이미지 추가'} onClick={onClickAddImageButtonHandler}/>
+        </div>
+        {thumbnails.length !== 0 &&
+        <div className='board-update-thumbnail-box'>
+          {thumbnails?.map((thumbnailUrl, index) => <ThumbnailCard key={thumbnailUrl} index={index} src={thumbnailUrl} isCloseButton={true} onClickCloseButton={onClickImageDeleteButtonHandler} />)}
+        </div>
+        }
       </div>
     </div>
   )

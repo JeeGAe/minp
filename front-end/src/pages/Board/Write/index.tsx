@@ -151,7 +151,7 @@ export default function BoardWrite() {
     <div id='board-write-wrapper'>
       <div className='board-write-container'>
         <div className='board-write-upload-button-box'>
-        <Button text={'업로드'} onClick={onClickUploadButtonHandler}/>
+          <Button text={'업로드'} onClick={onClickUploadButtonHandler}/>
         </div>
         <div className='board-write-title-box'>
           <textarea ref={titleInputRef} rows={1} value={title} onChange={onChangeTitleHandler} placeholder='제목을 입력하세요.'/>

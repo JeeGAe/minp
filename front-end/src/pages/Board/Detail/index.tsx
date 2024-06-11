@@ -200,8 +200,8 @@ export default function BoardDetail() {
             <div className='board-detail-favorite-button' onClick={onClickFavoriteButtonHandler}>{favoriteList?.filter(item => item.email === user.email).length !== 0 ? `💖` : `🤍`}</div>
           }
           <div className='board-detail-favorite-list'>
-            {favoriteList?.map((item, index) => {if(index < 2) return <span className='board-detail-favorite-nickname' key={item.nickname}>{item.nickname}</span>})}
-            {favoriteList.length > 2 && '...'}
+            {favoriteList?.map((item, index) => {if(index < 2) return <span className='board-detail-favorite-nickname' key={item.nickname}>{`${item.nickname} `}</span>})}
+            {favoriteList.length > 2 && ' ...'}
             {favoriteList.length !== 0 && ' 님이 좋아요 중'}
           </div>
         </div>
