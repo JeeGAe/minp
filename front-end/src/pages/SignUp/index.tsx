@@ -243,7 +243,7 @@ export default function SignUp() {
             message={errorMessage} 
           />
           <InputBox 
-            label='연락처' 
+            label='연락처*' 
             placeholder='연락처를 입력하세요.' 
             type='text' value={phoneNumber} 
             onChange={onChangePhoneNumberCheckInputHandler} 
@@ -252,7 +252,7 @@ export default function SignUp() {
             message={errorMessage} 
           />
           <InputBox 
-            label='우편번호' 
+            label='우편번호*' 
             placeholder='우편번호를 입력하세요.' 
             type='text' 
             value={zipCode} 
@@ -260,7 +260,7 @@ export default function SignUp() {
             onClick={onClickAddressInputHandler} 
           />
           <InputBox 
-            label='주소' 
+            label='주소*' 
             placeholder='주소를 입력하세요.' 
             type='text' 
             value={address} 

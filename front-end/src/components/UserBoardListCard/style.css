@@ -32,3 +32,13 @@
   display: flex;
   gap: 10px;
 }
+
+@media screen and (max-width: 767px) {
+  .user-board-list-card-wrapper {
+    width: 90%;
+  }
+
+  .user-board-list-card-title-box {
+    width: auto;
+  }
+}

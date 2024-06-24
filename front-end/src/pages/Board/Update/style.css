@@ -75,3 +75,10 @@
   display: flex;
   gap : 5px;
 }
+
+@media screen and (max-width: 767px) {
+  .board-update-container {
+    width: 90%;
+  }
+
+}

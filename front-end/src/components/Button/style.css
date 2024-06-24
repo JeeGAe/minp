@@ -4,7 +4,7 @@
   padding: 10px 15px;
   border-radius: 5px;
 
-  background-color: rgba(105, 0, 255, 1);
+  background-color: rgb(100, 0, 255);
   color: rgba(255, 255, 255, 1);
 
   text-align: center;
@@ -22,7 +22,7 @@
 }
 
 .button:hover {
-  background-color: rgba(105, 0, 255, 0.8);
+  background-color: rgba(100, 0, 255, 0.8);
 }
 
 .button.negative:hover {

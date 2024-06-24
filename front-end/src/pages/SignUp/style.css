@@ -21,6 +21,31 @@
   font-size: 80px;
 }
 
+.sign-up-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .sign-up-button-box {
   margin-top: 20px;
+}
+
+@media screen and (max-width: 767px) {
+
+  #sign-up-wrapper {
+    padding: 10px 0px;
+  }
+
+  .sign-up-container {
+    padding-top: 30px;
+    width: 80%;
+    grid-template-columns: none;
+    grid-template-rows: 3fr 6fr;
+  }
+
+  .sign-up-context-box{
+    display: none;
+  }
+
 }

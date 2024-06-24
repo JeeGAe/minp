@@ -13,7 +13,7 @@ if (!apiUrl) {
   throw new Error('REACT_APP_API_URL 환경 변수가 정의되지 않았습니다.');
 }
 
-export const DOMAIN = `http://${apiUrl}:${PORT}`;
+export const DOMAIN = `https://${apiUrl}`;
 
 export const API_DOMAIN = `${DOMAIN}/api`;
 

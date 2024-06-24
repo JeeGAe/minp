@@ -16,3 +16,11 @@
   justify-content: center;
   flex-wrap: wrap;
 }
+
+@media screen and (max-width: 767px) {
+  .main-latest-board-container {
+    width: 100%;
+    min-width: 0;
+    padding-left: 0;
+  }
+}

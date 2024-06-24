@@ -15,6 +15,12 @@
   column-gap: 30px;
 }
 
+.sign-in-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .sign-in-context-box{
   width: 500px;
 }
@@ -33,4 +39,17 @@
 
 .sign-in-sign-up-text {
   padding-bottom: 8px;
+}
+
+@media screen and (max-width: 767px) {
+  .sign-in-container{
+    width: 80%;
+    grid-template-columns: none;
+    grid-template-rows: 6fr 6fr;
+  }
+
+  .sign-in-context-box{
+    width: 100%;
+  }
+
 }

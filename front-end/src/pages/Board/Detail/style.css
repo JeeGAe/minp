@@ -78,3 +78,16 @@
 .board-detail-divider {
   border-top: 1px solid rgb(150, 150, 150);
 }
+
+@media screen and (max-width: 767px) {
+  .board-detail-container {
+    width: 90%;
+  }
+
+  .board-detail-title-box {
+    flex-direction: column;
+    justify-content: unset;
+    align-items: unset;
+    gap: 10px;
+  }
+}
